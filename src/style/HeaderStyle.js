@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
 export const HeaderContainer = styled.div`
+  .text-title {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 600;
+  }
+
   .gnb {
     display: flex;
     justify-content: space-between;

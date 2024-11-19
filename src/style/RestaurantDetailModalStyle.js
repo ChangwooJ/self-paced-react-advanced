@@ -1,6 +1,18 @@
 import styled from "styled-components";
 
 export const RestaurantDetailModalContainer = styled.div`
+  .text-body {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+
+  .text-caption {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+
   .modal {
     display: none;
   }

@@ -1,6 +1,18 @@
 import styled from "styled-components";
 
 export const RestaurantListContainer = styled.div`
+  .text-subtitle {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 600;
+  }
+
+  .text-body {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+
   .restaurant-list-container {
     display: flex;
     flex-direction: column;
