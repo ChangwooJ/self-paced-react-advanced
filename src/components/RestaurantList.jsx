@@ -1,8 +1,8 @@
-import "../App.css";
+import { RestaurantListContainer } from "../style/RestaurantListStyle";
 
 function RestaurantList() {
   return (
-    <>
+    <RestaurantListContainer>
       <section className="restaurant-list-container">
         <ul className="restaurant-list">
           <li className="restaurant">
@@ -76,7 +76,7 @@ function RestaurantList() {
           </li>
         </ul>
       </section>
-    </>
+    </RestaurantListContainer>
   );
 }
 

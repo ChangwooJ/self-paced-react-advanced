@@ -1,8 +1,8 @@
-// import "../../templates/style.css";
+import { RestaurantDetailModalContainer } from "../style/RestaurantDetailModalStyle";
 
 function RestaurantDetailModal() {
   return (
-    <>
+    <RestaurantDetailModalContainer>
       <div className="modal modal--open">
         <div className="modal-backdrop"></div>
         <div className="modal-container">
@@ -15,7 +15,7 @@ function RestaurantDetailModal() {
           </div>
         </div>
       </div>
-    </>
+    </RestaurantDetailModalContainer>
   );
 }
 

@@ -1,12 +1,13 @@
+import { AddRestaurantModalContainer } from "../style/AddRestaurantModalStyle";
+
 function AddRestaurantModal() {
   return (
-    <>
+    <AddRestaurantModalContainer>
       <div className="modal modal--open">
         <div className="modal-backdrop"></div>
         <div className="modal-container">
           <h2 className="modal-title text-title">새로운 음식점</h2>
           <form>
-            {/* 카테고리 */}
             <div className="form-item form-item--required">
               <label htmlFor="category text-caption">카테고리</label>
               <select name="category" id="category" required>
@@ -20,27 +21,24 @@ function AddRestaurantModal() {
               </select>
             </div>
 
-            {/* 음식점 이름 */}
             <div className="form-item form-item--required">
               <label htmlFor="name text-caption">이름</label>
               <input type="text" name="name" id="name" required />
             </div>
 
-            {/* 설명 */}
             <div className="form-item">
               <label htmlFor="description text-caption">설명</label>
               <textarea name="description" id="description" cols="30" rows="5"></textarea>
               <span className="help-text text-caption">메뉴 등 추가 정보를 입력해 주세요.</span>
             </div>
 
-            {/* 추가 버튼 */}
             <div className="button-container">
               <button className="button button--primary text-caption">추가하기</button>
             </div>
           </form>
         </div>
       </div>
-    </>
+    </AddRestaurantModalContainer>
   );
 }
 

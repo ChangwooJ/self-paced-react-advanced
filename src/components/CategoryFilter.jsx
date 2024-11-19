@@ -1,8 +1,8 @@
-// import "../../templates/style.css";
+import { CategoryFilterContainer } from "../style/CategoryFilterStyle";
 
 function CategoryFilter() {
   return (
-    <>
+    <CategoryFilterContainer>
       <section className="restaurant-filter-container">
         <select
           name="category"
@@ -19,7 +19,7 @@ function CategoryFilter() {
           <option value="기타">기타</option>
         </select>
       </section>
-    </>
+    </CategoryFilterContainer>
   );
 }
 
