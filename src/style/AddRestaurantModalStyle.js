@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
 export const AddRestaurantModalContainer = styled.div`
+  .text-title {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 600;
+  }
+
   .text-caption {
     font-size: 14px;
     line-height: 20px;
@@ -12,8 +18,8 @@ export const AddRestaurantModalContainer = styled.div`
   }
 
   .modal--open {
-    /* display: block; */
-    display: none;
+    display: block;
+    /* display: none; */
   }
 
   .modal-backdrop {
