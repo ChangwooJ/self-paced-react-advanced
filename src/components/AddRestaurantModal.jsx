@@ -1,7 +1,15 @@
-import { AddRestaurantModalContainer } from "../style/AddRestaurantModalStyle";
 import { CATEGORY_DATA } from "../data/categoryData";
 import { addRestaurant } from "../api/restaurantAPI";
 import { useState } from "react";
+import {
+  AddRestaurantModalContainer,
+  Modal,
+  ModalBackdrop,
+  ModalContainer,
+  Title,
+  FormItem,
+  ButtonContainer,
+} from "../style/AddRestaurantModalStyle";
 
 function AddRestaurantModal({ setIsAddModalOpen, updateRestaurantList }) {
   const [newRestaurant, setNewRestaurant] = useState({
@@ -20,13 +28,15 @@ function AddRestaurantModal({ setIsAddModalOpen, updateRestaurantList }) {
 
   return (
     <AddRestaurantModalContainer>
-      <div className="modal modal--open">
-        <div className="modal-backdrop" onClick={() => setIsAddModalOpen(false)}></div>
-        <div className="modal-container">
-          <h2 className="modal-title text-title">새로운 음식점</h2>
+      <Modal>
+        <ModalBackdrop onClick={() => setIsAddModalOpen(false)}></ModalBackdrop>
+        <ModalContainer>
+          <Title className="text-title">새로운 음식점</Title>
           <form>
-            <div className="form-item form-item--required">
-              <label htmlFor="category text-caption">카테고리</label>
+            <FormItem required>
+              <label htmlFor="category" className="text-caption">
+                카테고리
+              </label>
               <select
                 name="category"
                 id="category"
@@ -40,10 +50,12 @@ function AddRestaurantModal({ setIsAddModalOpen, updateRestaurantList }) {
                   <option key={category}>{category}</option>
                 ))}
               </select>
-            </div>
+            </FormItem>
 
-            <div className="form-item form-item--required">
-              <label htmlFor="name text-caption">이름</label>
+            <FormItem required>
+              <label htmlFor="name" className="text-caption">
+                이름
+              </label>
               <input
                 type="text"
                 name="name"
@@ -53,10 +65,12 @@ function AddRestaurantModal({ setIsAddModalOpen, updateRestaurantList }) {
                   setNewRestaurant({ ...newRestaurant, name: event.target.value })
                 }
               />
-            </div>
+            </FormItem>
 
-            <div className="form-item">
-              <label htmlFor="description text-caption">설명</label>
+            <FormItem>
+              <label htmlFor="description" className="text-caption">
+                설명
+              </label>
               <textarea
                 name="description"
                 id="description"
@@ -68,9 +82,9 @@ function AddRestaurantModal({ setIsAddModalOpen, updateRestaurantList }) {
                 }
               ></textarea>
               <span className="help-text text-caption">메뉴 등 추가 정보를 입력해 주세요.</span>
-            </div>
+            </FormItem>
 
-            <div className="button-container">
+            <ButtonContainer>
               <button
                 className="button button--primary text-caption"
                 type="button"
@@ -78,10 +92,10 @@ function AddRestaurantModal({ setIsAddModalOpen, updateRestaurantList }) {
               >
                 추가하기
               </button>
-            </div>
+            </ButtonContainer>
           </form>
-        </div>
-      </div>
+        </ModalContainer>
+      </Modal>
     </AddRestaurantModalContainer>
   );
 }

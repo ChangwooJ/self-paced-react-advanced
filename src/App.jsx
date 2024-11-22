@@ -32,7 +32,6 @@ function App() {
   });
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  console.log(isAddModalOpen);
 
   const updateRestaurantList = () => {
     getRestaurantList().then((data) => {
