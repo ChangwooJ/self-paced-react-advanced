@@ -1,15 +1,12 @@
 import styled from "styled-components";
 
 export const CategoryFilterContainer = styled.div`
-  .restaurant-filter-container {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  margin-top: 24px;
 
-    padding: 0 16px;
-    margin-top: 24px;
-  }
-
-  .restaurant-filter-container select {
+  select {
     height: 44px;
     min-width: 125px;
 
