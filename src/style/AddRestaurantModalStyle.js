@@ -1,14 +1,20 @@
 import styled from "styled-components";
 
-export const Modal = styled.div`
-  /* .modal {
-    display: none;
+export const AddRestaurantModalContainer = styled.div`
+  .text-title {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 600;
   }
 
-  .modal--open {
-    display: block;
-    //display: none;
-  } */
+  .text-caption {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+`;
+
+export const Modal = styled.div`
   display: block;
 `;
 
@@ -126,25 +132,4 @@ export const ButtonContainer = styled.div`
 
     color: var(--grey-100);
   }
-`;
-
-export const AddRestaurantModalContainer = styled.div`
-  .text-title {
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: 600;
-  }
-
-  .text-caption {
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: 400;
-  }
-
-  /* 
-  
-
-  .restaurant-info {
-    margin-bottom: 24px;
-  } */
 `;

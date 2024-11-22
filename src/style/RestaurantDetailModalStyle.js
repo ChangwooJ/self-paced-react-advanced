@@ -1,6 +1,12 @@
 import styled from "styled-components";
 
 export const RestaurantDetailModalContainer = styled.div`
+  .text-title {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 600;
+  }
+
   .text-body {
     font-size: 16px;
     line-height: 24px;
@@ -12,99 +18,43 @@ export const RestaurantDetailModalContainer = styled.div`
     line-height: 20px;
     font-weight: 400;
   }
+`;
 
-  .modal {
-    display: none;
-  }
+export const Modal = styled.div`
+  display: block;
+`;
 
-  .modal--open {
-    /* display: block; */
-    display: none;
-  }
+export const ModalBackdrop = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
-  .modal-backdrop {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+  background: rgba(0, 0, 0, 0.35);
+`;
 
-    background: rgba(0, 0, 0, 0.35);
-  }
+export const ModalContainer = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 
-  .modal-container {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+  padding: 32px 16px;
 
-    padding: 32px 16px;
+  border-radius: 8px 8px 0px 0px;
+  background: var(--grey-100);
+`;
 
-    border-radius: 8px 8px 0px 0px;
-    background: var(--grey-100);
-  }
+export const Title = styled.h2`
+  margin-bottom: 36px;
+`;
 
-  .modal-title {
-    margin-bottom: 36px;
-  }
+export const RestaurantInfo = styled.div`
+  margin-bottom: 24px;
+`;
 
-  .form-item {
-    display: flex;
-    flex-direction: column;
-
-    margin-bottom: 36px;
-  }
-
-  .form-item label {
-    color: var(--grey-400);
-    font-size: 14px;
-  }
-
-  .form-item--required label::after {
-    padding-left: 4px;
-
-    color: var(--primary-color);
-    content: "*";
-  }
-
-  .form-item .help-text {
-    color: var(--grey-300);
-  }
-
-  .form-item input,
-  .form-item textarea,
-  .form-item select {
-    padding: 8px;
-    margin: 6px 0;
-
-    border: 1px solid var(--grey-200);
-    border-radius: 8px;
-
-    font-size: 16px;
-  }
-
-  .form-item textarea {
-    resize: none;
-  }
-
-  .form-item select {
-    height: 44px;
-
-    padding: 8px;
-
-    border: 1px solid var(--grey-200);
-    border-radius: 8px;
-
-    color: var(--grey-300);
-  }
-
-  input[name="name"],
-  input[name="link"] {
-    height: 44px;
-  }
-
-  .button-container {
-    display: flex;
-  }
+export const ButtonContainer = styled.div`
+  display: flex;
 
   .button {
     width: 100%;
@@ -134,9 +84,5 @@ export const RestaurantDetailModalContainer = styled.div`
     background: var(--primary-color);
 
     color: var(--grey-100);
-  }
-
-  .restaurant-info {
-    margin-bottom: 24px;
   }
 `;

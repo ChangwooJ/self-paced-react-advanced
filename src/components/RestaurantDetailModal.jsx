@@ -1,25 +1,33 @@
-import { RestaurantDetailModalContainer } from "../style/RestaurantDetailModalStyle";
+import {
+  RestaurantDetailModalContainer,
+  Modal,
+  ModalBackdrop,
+  ModalContainer,
+  Title,
+  RestaurantInfo,
+  ButtonContainer,
+} from "../style/RestaurantDetailModalStyle";
 
 function RestaurantDetailModal({ setModal, modal }) {
   return (
     <RestaurantDetailModalContainer>
-      <div className="modal modal--open">
-        <div className="modal-backdrop" onClick={() => setModal({ ...modal, isOpen: false })}></div>
-        <div className="modal-container">
-          <h2 className="modal-title text-title">{modal.restaurant.name}</h2>
-          <div className="restaurant-info">
-            <p className="restaurant-info__description text-body">{modal.restaurant.description}</p>
-          </div>
-          <div className="button-container">
+      <Modal>
+        <ModalBackdrop onClick={() => setModal({ ...modal, isOpen: false })}></ModalBackdrop>
+        <ModalContainer>
+          <Title className="text-title">{modal.restaurant.name}</Title>
+          <RestaurantInfo>
+            <p className="text-body">{modal.restaurant.description}</p>
+          </RestaurantInfo>
+          <ButtonContainer>
             <button
               className="button button--primary text-caption"
               onClick={() => setModal({ ...modal, isOpen: false })}
             >
               닫기
             </button>
-          </div>
-        </div>
-      </div>
+          </ButtonContainer>
+        </ModalContainer>
+      </Modal>
     </RestaurantDetailModalContainer>
   );
 }
