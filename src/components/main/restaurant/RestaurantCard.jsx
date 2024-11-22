@@ -55,9 +55,7 @@ export default RestaurantCard;
 const RestaurantCardBox = styled.div`
   display: flex;
   align-items: flex-start;
-
   padding: 16px 8px;
-
   border-bottom: 1px solid #e9eaed;
 `;
 
@@ -70,7 +68,6 @@ const CategoryBox = styled.div`
   min-width: 64px;
   min-height: 64px;
   margin-right: 16px;
-
   border-radius: 50%;
   background: var(--lighten-color);
 
@@ -95,7 +92,6 @@ const RestaurantName = styled.h3`
 
 const RestaurantDescription = styled.p`
   display: -webkit-box;
-
   padding-top: 8px;
   overflow: hidden;
   text-overflow: ellipsis;

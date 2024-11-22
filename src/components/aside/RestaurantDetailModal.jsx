@@ -28,9 +28,7 @@ const RestaurantInfoBox = styled.div`
 
 const RestaurantDescription = styled.p`
   display: -webkit-box;
-
   padding-top: 8px;
-
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
@@ -49,14 +47,11 @@ const StyledButton = styled.button`
   width: 100%;
   height: 44px;
   margin-right: 16px;
-
   border: none;
   border-radius: 8px;
-
   font-weight: 600;
   cursor: pointer;
   background: var(--primary-color);
-
   color: var(--grey-100);
   font-size: 14px;
   line-height: 20px;

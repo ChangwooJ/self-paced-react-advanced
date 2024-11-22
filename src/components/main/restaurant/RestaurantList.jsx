@@ -31,7 +31,6 @@ export default RestaurantList;
 const RestaurantListContainer = styled.section`
   display: flex;
   flex-direction: column;
-
   padding: 0 16px;
   margin: 16px 0;
 `;

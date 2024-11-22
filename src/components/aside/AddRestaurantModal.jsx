@@ -169,7 +169,6 @@ const StyledButton = styled.button`
   cursor: pointer;
   background: var(--primary-color);
   color: var(--grey-100);
-
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;

@@ -23,9 +23,7 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   height: 64px;
-
   padding: 0 16px;
-
   background-color: var(--primary-color);
 `;
 
