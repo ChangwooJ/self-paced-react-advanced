@@ -13,55 +13,49 @@ export const RestaurantListContainer = styled.div`
     font-weight: 400;
   }
 
-  .restaurant-list-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    padding: 0 16px;
-    margin: 16px 0;
-  }
+  padding: 0 16px;
+  margin: 16px 0;
+`;
 
-  .restaurant {
-    display: flex;
-    align-items: flex-start;
+export const Restaurant = styled.li`
+  display: flex;
+  align-items: flex-start;
 
-    padding: 16px 8px;
+  padding: 16px 8px;
 
-    border-bottom: 1px solid #e9eaed;
-  }
+  border-bottom: 1px solid #e9eaed;
+`;
 
-  .restaurant__category {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 64px;
-    height: 64px;
-    min-width: 64px;
-    min-height: 64px;
+export const RestaurantCategory = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  min-height: 64px;
 
-    margin-right: 16px;
+  margin-right: 16px;
 
-    border-radius: 50%;
-    background: var(--lighten-color);
-  }
+  border-radius: 50%;
+  background: var(--lighten-color);
 
   .category-icon {
     width: 36px;
     height: 36px;
   }
+`;
 
-  .restaurant__info {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
+export const RestaurantInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 
   .restaurant__name {
     margin: 0;
-  }
-
-  .restaurant__distance {
-    color: var(--primary-color);
   }
 
   .restaurant__description {

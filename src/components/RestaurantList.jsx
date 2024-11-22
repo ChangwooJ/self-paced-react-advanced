@@ -1,4 +1,9 @@
-import { RestaurantListContainer } from "../style/RestaurantListStyle";
+import {
+  RestaurantListContainer,
+  Restaurant,
+  RestaurantCategory,
+  RestaurantInfo,
+} from "../style/RestaurantListStyle";
 
 const CATEGORY_IN_ENGLISH = Object.freeze({
   한식: "korean",
@@ -23,29 +28,23 @@ function RestaurantList({ restaurants, setModal, modal }) {
 
   return (
     <RestaurantListContainer>
-      <section className="restaurant-list-container">
-        <ul className="restaurant-list">
-          {restaurants.map((restaurant) => (
-            <li
-              key={restaurant.id}
-              className="restaurant"
-              onClick={() => handleRestaurantClick(restaurant)}
-            >
-              <div className="restaurant__category">
-                <img
-                  src={`/category-${CATEGORY_IN_ENGLISH[restaurant.category]}.png`}
-                  alt=""
-                  className="category-icon"
-                />
-              </div>
-              <div className="restaurant__info">
-                <h3 className="restaurant__name text-subtitle">{restaurant.name}</h3>
-                <p className="restaurant__description text-body">{restaurant.description}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <ul className="restaurant-list">
+        {restaurants.map((restaurant) => (
+          <Restaurant key={restaurant.id} onClick={() => handleRestaurantClick(restaurant)}>
+            <RestaurantCategory>
+              <img
+                src={`/category-${CATEGORY_IN_ENGLISH[restaurant.category]}.png`}
+                alt=""
+                className="category-icon"
+              />
+            </RestaurantCategory>
+            <RestaurantInfo>
+              <h3 className="restaurant__name text-subtitle">{restaurant.name}</h3>
+              <p className="restaurant__description text-body">{restaurant.description}</p>
+            </RestaurantInfo>
+          </Restaurant>
+        ))}
+      </ul>
     </RestaurantListContainer>
   );
 }
