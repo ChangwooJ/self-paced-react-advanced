@@ -1,9 +1,12 @@
+import { useContext } from "react";
 import {
   RestaurantListContainer,
   Restaurant,
   RestaurantCategory,
   RestaurantInfo,
 } from "../style/RestaurantListStyle";
+import { RestaurantListContext } from "../contexts/RestaurantListContext";
+import { ModalContext } from "../contexts/ModalContext";
 
 const CATEGORY_IN_ENGLISH = Object.freeze({
   한식: "korean",
@@ -14,7 +17,10 @@ const CATEGORY_IN_ENGLISH = Object.freeze({
   기타: "etc",
 });
 
-function RestaurantList({ restaurants, setModal, modal }) {
+function RestaurantList() {
+  const { restaurantList: restaurants } = useContext(RestaurantListContext);
+  const { modal, setModal } = useContext(ModalContext);
+
   const handleRestaurantClick = (restaurant) => {
     setModal({
       ...modal,

@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import {
   RestaurantDetailModalContainer,
   Modal,
@@ -7,8 +8,11 @@ import {
   RestaurantInfo,
   ButtonContainer,
 } from "../style/RestaurantDetailModalStyle";
+import { ModalContext } from "../contexts/ModalContext";
 
-function RestaurantDetailModal({ setModal, modal }) {
+function RestaurantDetailModal() {
+  const { modal, setModal } = useContext(ModalContext);
+
   return (
     <RestaurantDetailModalContainer>
       <Modal>

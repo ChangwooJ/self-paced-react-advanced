@@ -1,6 +1,6 @@
 import { CATEGORY_DATA } from "../data/categoryData";
 import { addRestaurant } from "../api/restaurantAPI";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import {
   AddRestaurantModalContainer,
   Modal,
@@ -10,8 +10,13 @@ import {
   FormItem,
   ButtonContainer,
 } from "../style/AddRestaurantModalStyle";
+import { ModalContext } from "../contexts/ModalContext";
+import { RestaurantListContext } from "../contexts/RestaurantListContext";
 
-function AddRestaurantModal({ setIsAddModalOpen, updateRestaurantList }) {
+function AddRestaurantModal() {
+  const { setIsAddModalOpen } = useContext(ModalContext);
+  const { updateRestaurantList } = useContext(RestaurantListContext);
+
   const [newRestaurant, setNewRestaurant] = useState({
     id: Date.now(),
     name: "",
