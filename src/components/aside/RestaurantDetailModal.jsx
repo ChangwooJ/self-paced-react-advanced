@@ -51,8 +51,8 @@ const StyledButton = styled.button`
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  background: var(--primary-color);
-  color: var(--grey-100);
+  background: ${(props) => props.theme.primaryColor};
+  color: ${(props) => props.theme.grey100};
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;

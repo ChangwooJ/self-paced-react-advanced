@@ -33,7 +33,7 @@ const ModalContainer = styled.div`
   width: 100%;
   padding: 32px 16px;
   border-radius: 8px 8px 0px 0px;
-  background: var(--grey-100);
+  background: ${(props) => props.theme.grey100};
 `;
 
 const ModalTitle = styled.h2`

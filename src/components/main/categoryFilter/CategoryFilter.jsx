@@ -37,7 +37,7 @@ const RestaurantFilterContainer = styled.section`
   & > select {
     height: 44px;
     min-width: 125px;
-    border: 1px solid #d0d5dd;
+    border: 1px solid ${(props) => props.theme.grey200};
     border-radius: 8px;
     background: transparent;
     font-size: 16px;

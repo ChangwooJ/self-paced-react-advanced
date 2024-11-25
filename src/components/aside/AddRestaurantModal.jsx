@@ -4,6 +4,7 @@ import { CATEGORYOPTION } from '../constants/CategoryOption';
 import Modal from '../common/modal/Modal';
 import { postRestaurant } from '../../api/restaurant';
 import { getRestaurant } from '../../api/restaurant';
+import { v4 as uuidv4 } from 'uuid';
 
 const AddRestaurantModal = ({ setRestaurantsList, setIsAddModalOpen }) => {
   const [category, setCategory] = useState('');
@@ -27,7 +28,7 @@ const AddRestaurantModal = ({ setRestaurantsList, setIsAddModalOpen }) => {
   };
 
   const newRestaurant = {
-    id: Date.now(),
+    id: uuidv4(),
     category: category,
     name: name,
     description: description,
@@ -117,7 +118,7 @@ const FormItemBox = styled.div`
   margin-bottom: 36px;
 
   & > select {
-    color: var(--grey-300);
+    color: ${(props) => props.theme.grey300};
   }
 
   & > span {
@@ -131,7 +132,7 @@ const FormItemBox = styled.div`
   select {
     padding: 8px;
     margin: 6px 0;
-    border: 1px solid var(--grey-200);
+    border: 1px solid ${(props) => props.theme.grey200};
     border-radius: 8px;
     font-size: 16px;
     width: 100%;
@@ -144,14 +145,14 @@ const FormItemBox = styled.div`
 `;
 
 const StyledLabel = styled.label`
-  color: var(--grey-400);
+  color: ${(props) => props.theme.grey400};
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
 
   &::after {
     padding-left: 4px;
-    color: var(--primary-color);
+    color: ${(props) => props.theme.primaryColor};
     content: '*';
   }
 `;
@@ -167,8 +168,8 @@ const StyledButton = styled.button`
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  background: var(--primary-color);
-  color: var(--grey-100);
+  background: ${(props) => props.theme.primaryColor};
+  color: ${(props) => props.theme.grey100};
   font-weight: 600;
   font-size: 14px;
   line-height: 20px;

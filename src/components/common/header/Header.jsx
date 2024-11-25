@@ -24,11 +24,11 @@ const HeaderContainer = styled.header`
   align-items: center;
   height: 64px;
   padding: 0 16px;
-  background-color: var(--primary-color);
+  background: ${(props) => props.theme.primaryColor};
 `;
 
 const Title = styled.h1`
-  color: #fcfcfd;
+  color: ${(props) => props.theme.grey200};
   font-size: 20px;
   line-height: 24px;
   font-weight: 600;
