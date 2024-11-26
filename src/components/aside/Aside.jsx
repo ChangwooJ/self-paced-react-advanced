@@ -1,30 +1,27 @@
 import RestaurantDetailModal from './RestaurantDetailModal';
 import AddRestaurantModal from './AddRestaurantModal';
+import { ModalConsumer } from '../../context/ModalContext';
 
-function Aside({
-  isModalOpen,
-  isAddModalOpen,
-  selectedRestaurant,
-  setIsModalOpen,
-  setIsAddModalOpen,
-  setRestaurantsList,
-}) {
+function Aside({ selectedRestaurant, setRestaurantsList }) {
   return (
-    <aside>
-      {isModalOpen && (
-        <RestaurantDetailModal
-          setIsModalOpen={setIsModalOpen}
-          restaurantName={selectedRestaurant.name}
-          restaurantDescription={selectedRestaurant.description}
-        />
-      )}
-      {isAddModalOpen && (
-        <AddRestaurantModal
-          setIsAddModalOpen={setIsAddModalOpen}
-          setRestaurantsList={setRestaurantsList}
-        />
-      )}
-    </aside>
+    <ModalConsumer>
+      {(value) => {
+        console.log(value);
+        return (
+          <aside>
+            {value.state.detailModal && (
+              <RestaurantDetailModal
+                restaurantName={selectedRestaurant.name}
+                restaurantDescription={selectedRestaurant.description}
+              />
+            )}
+            {value.state.addModal && (
+              <AddRestaurantModal setRestaurantsList={setRestaurantsList} />
+            )}
+          </aside>
+        );
+      }}
+    </ModalConsumer>
   );
 }
 

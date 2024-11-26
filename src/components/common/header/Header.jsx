@@ -1,17 +1,25 @@
 import styled from 'styled-components';
 import addButton from '../../../assets/button/add-button.png';
+import { ModalConsumer } from '../../../context/ModalContext';
 
-const Header = ({ onAddRestaurantClick }) => {
+const Header = () => {
   return (
     <HeaderContainer>
       <Title>점심 뭐 먹지</Title>
-      <AddRestaurantButton
-        type="button"
-        aria-label="음식점 추가"
-        onClick={onAddRestaurantClick}
-      >
-        <AddRestaurantImg src={addButton} alt="음식점 추가" />
-      </AddRestaurantButton>
+      <ModalConsumer>
+        {(value) => {
+          console.log(value);
+          return (
+            <AddRestaurantButton
+              type="button"
+              aria-label="음식점 추가"
+              onClick={() => value.actions.setAddModal(true)}
+            >
+              <AddRestaurantImg src={addButton} alt="음식점 추가" />
+            </AddRestaurantButton>
+          );
+        }}
+      </ModalConsumer>
     </HeaderContainer>
   );
 };
@@ -28,7 +36,7 @@ const HeaderContainer = styled.header`
 `;
 
 const Title = styled.h1`
-  color: ${(props) => props.theme.grey200};
+  color: ${(props) => props.theme.grey100};
   font-size: 20px;
   line-height: 24px;
   font-weight: 600;

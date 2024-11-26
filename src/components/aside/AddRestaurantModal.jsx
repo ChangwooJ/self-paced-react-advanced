@@ -5,8 +5,9 @@ import Modal from '../common/modal/Modal';
 import { postRestaurant } from '../../api/restaurant';
 import { getRestaurant } from '../../api/restaurant';
 import { v4 as uuidv4 } from 'uuid';
+import { ModalConsumer } from '../../context/ModalContext';
 
-const AddRestaurantModal = ({ setRestaurantsList, setIsAddModalOpen }) => {
+const AddRestaurantModal = ({ setRestaurantsList }) => {
   const [category, setCategory] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -55,7 +56,6 @@ const AddRestaurantModal = ({ setRestaurantsList, setIsAddModalOpen }) => {
 
     if (isFilledoutAll) {
       submitFormHandler();
-      setIsAddModalOpen(false);
     }
   };
 

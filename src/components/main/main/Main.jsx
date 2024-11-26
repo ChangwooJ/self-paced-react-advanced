@@ -3,12 +3,7 @@ import CategoryFilter from '../categoryFilter/CategoryFilter';
 import RestaurantList from '../restaurant/RestaurantList';
 import { useState } from 'react';
 
-function Main({
-  restaurantsList,
-  setIsModalOpen,
-  setSelectedRestaurant,
-  setIsAddModalOpen,
-}) {
+function Main({ restaurantsList, setSelectedRestaurant }) {
   const [category, setCategory] = useState('전체');
 
   const filteredRestaurants =
@@ -20,12 +15,11 @@ function Main({
 
   return (
     <>
-      <Header onAddRestaurantClick={() => setIsAddModalOpen(true)} />
+      <Header />
       <main>
         <CategoryFilter category={category} onChangeCategory={setCategory} />
         <RestaurantList
           restaurants={filteredRestaurants}
-          setIsModalOpen={setIsModalOpen}
           setSelectedRestaurant={setSelectedRestaurant}
         />
       </main>

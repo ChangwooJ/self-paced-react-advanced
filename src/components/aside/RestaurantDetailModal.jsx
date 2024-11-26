@@ -1,5 +1,6 @@
 import Modal from '../common/modal/Modal';
 import styled from 'styled-components';
+import { ModalConsumer } from '../../context/ModalContext';
 
 const RestaurantDetailModal = ({
   setIsModalOpen,
@@ -7,14 +8,25 @@ const RestaurantDetailModal = ({
   restaurantDescription,
 }) => {
   return (
-    <Modal title={restaurantName} onClose={() => setIsModalOpen(false)}>
-      <RestaurantInfoBox>
-        <RestaurantDescription>{restaurantDescription}</RestaurantDescription>
-      </RestaurantInfoBox>
-      <ButtonContainer>
-        <StyledButton onClick={() => setIsModalOpen(false)}>닫기</StyledButton>
-      </ButtonContainer>
-    </Modal>
+    <ModalConsumer>
+      {(value) => (
+        <Modal
+          title={restaurantName}
+          onClose={() => value.actions.setDetailModal(false)}
+        >
+          <RestaurantInfoBox>
+            <RestaurantDescription>
+              {restaurantDescription}
+            </RestaurantDescription>
+          </RestaurantInfoBox>
+          <ButtonContainer>
+            <StyledButton onClick={() => value.actions.setDetailModal(false)}>
+              닫기
+            </StyledButton>
+          </ButtonContainer>
+        </Modal>
+      )}
+    </ModalConsumer>
   );
 };
 

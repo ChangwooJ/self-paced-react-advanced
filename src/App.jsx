@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import Main from './components/main/main/Main';
 import Aside from './components/aside/Aside';
 import { getRestaurant } from './api/restaurant';
+import { ModalProvider } from './context/ModalContext';
 
 const theme = {
   primaryColor: 'var(--primary-color)',
@@ -16,8 +17,6 @@ const theme = {
 };
 
 function App() {
-  const [isModalOpen, setIsModalOpen] = useState();
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedRestaurant, setSelectedRestaurant] = useState({
     name: '',
     description: '',
@@ -30,20 +29,16 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Main
-        restaurantsList={restaurantsList}
-        setIsModalOpen={setIsModalOpen}
-        setSelectedRestaurant={setSelectedRestaurant}
-        setIsAddModalOpen={setIsAddModalOpen}
-      />
-      <Aside
-        isModalOpen={isModalOpen}
-        isAddModalOpen={isAddModalOpen}
-        selectedRestaurant={selectedRestaurant}
-        setIsModalOpen={setIsModalOpen}
-        setIsAddModalOpen={setIsAddModalOpen}
-        setRestaurantsList={setRestaurantsList}
-      />
+      <ModalProvider>
+        <Main
+          restaurantsList={restaurantsList}
+          setSelectedRestaurant={setSelectedRestaurant}
+        />
+        <Aside
+          selectedRestaurant={selectedRestaurant}
+          setRestaurantsList={setRestaurantsList}
+        />
+      </ModalProvider>
     </ThemeProvider>
   );
 }

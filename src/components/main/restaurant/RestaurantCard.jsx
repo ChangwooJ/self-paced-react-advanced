@@ -23,30 +23,28 @@ const getCategoryIcon = (alt) => {
   }
 };
 
-const RestaurantCard = ({
-  alt,
-  name,
-  description,
-  setIsModalOpen,
-  setSelectedRestaurant,
-}) => {
+const RestaurantCard = ({ alt, name, description, setSelectedRestaurant }) => {
   const image = getCategoryIcon(alt);
 
-  const handleCardClick = () => {
-    setIsModalOpen(true);
-    setSelectedRestaurant({ name, description });
-  };
-
   return (
-    <RestaurantCardBox onClick={handleCardClick}>
-      <CategoryBox>
-        <img src={image} alt={alt} />
-      </CategoryBox>
-      <RestaurantInfoBox>
-        <RestaurantName>{name}</RestaurantName>
-        <RestaurantDescription>{description}</RestaurantDescription>
-      </RestaurantInfoBox>
-    </RestaurantCardBox>
+    <ModalConsumer>
+      {(value) => (
+        <RestaurantCardBox
+          onClick={() => {
+            value.actions.setDetailModal(true);
+            setSelectedRestaurant({ name, description });
+          }}
+        >
+          <CategoryBox>
+            <img src={image} alt={alt} />
+          </CategoryBox>
+          <RestaurantInfoBox>
+            <RestaurantName>{name}</RestaurantName>
+            <RestaurantDescription>{description}</RestaurantDescription>
+          </RestaurantInfoBox>
+        </RestaurantCardBox>
+      )}
+    </ModalConsumer>
   );
 };
 
