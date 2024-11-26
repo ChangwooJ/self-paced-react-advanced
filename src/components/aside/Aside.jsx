@@ -2,22 +2,14 @@ import RestaurantDetailModal from './RestaurantDetailModal';
 import AddRestaurantModal from './AddRestaurantModal';
 import { ModalConsumer } from '../../context/ModalContext';
 
-function Aside({ selectedRestaurant, setRestaurantsList }) {
+function Aside() {
   return (
     <ModalConsumer>
-      {(value) => {
-        console.log(value);
+      {({ state: { detailModal, addModal } }) => {
         return (
           <aside>
-            {value.state.detailModal && (
-              <RestaurantDetailModal
-                restaurantName={selectedRestaurant.name}
-                restaurantDescription={selectedRestaurant.description}
-              />
-            )}
-            {value.state.addModal && (
-              <AddRestaurantModal setRestaurantsList={setRestaurantsList} />
-            )}
+            {detailModal && <RestaurantDetailModal />}
+            {addModal && <AddRestaurantModal />}
           </aside>
         );
       }}

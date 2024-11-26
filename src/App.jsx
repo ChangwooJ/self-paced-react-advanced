@@ -1,10 +1,10 @@
 import './App.css';
-import { useState, useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import Main from './components/main/main/Main';
 import Aside from './components/aside/Aside';
-import { getRestaurant } from './api/restaurant';
 import { ModalProvider } from './context/ModalContext';
+import { RestaurantsProvider } from './context/RestaurantListContext';
+import { SelectedRestaurantProvider } from './context/SelectedRestaurantContext';
 
 const theme = {
   primaryColor: 'var(--primary-color)',
@@ -17,27 +17,15 @@ const theme = {
 };
 
 function App() {
-  const [selectedRestaurant, setSelectedRestaurant] = useState({
-    name: '',
-    description: '',
-  });
-  const [restaurantsList, setRestaurantsList] = useState([]);
-
-  useEffect(() => {
-    getRestaurant(setRestaurantsList);
-  }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <ModalProvider>
-        <Main
-          restaurantsList={restaurantsList}
-          setSelectedRestaurant={setSelectedRestaurant}
-        />
-        <Aside
-          selectedRestaurant={selectedRestaurant}
-          setRestaurantsList={setRestaurantsList}
-        />
+        <RestaurantsProvider>
+          <SelectedRestaurantProvider>
+            <Main />
+            <Aside />
+          </SelectedRestaurantProvider>
+        </RestaurantsProvider>
       </ModalProvider>
     </ThemeProvider>
   );

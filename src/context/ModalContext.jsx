@@ -1,12 +1,6 @@
 import { createContext, useState } from 'react';
 
-const ModalContext = createContext({
-  state: { detailModal: false, addModal: false },
-  actions: {
-    setDetailModal: () => {},
-    setAddModal: () => {},
-  },
-});
+const ModalContext = createContext();
 
 const ModalProvider = ({ children }) => {
   const [detailModal, setDetailModal] = useState(false);

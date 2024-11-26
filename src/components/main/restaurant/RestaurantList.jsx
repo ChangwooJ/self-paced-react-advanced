@@ -1,11 +1,7 @@
 import RestaurantCard from './RestaurantCard';
 import styled from 'styled-components';
 
-const RestaurantList = ({
-  restaurants,
-  setIsModalOpen,
-  setSelectedRestaurant,
-}) => {
+const RestaurantList = ({ restaurants }) => {
   return (
     <RestaurantListContainer>
       <ul>
@@ -16,8 +12,6 @@ const RestaurantList = ({
               alt={item.category}
               name={item.name}
               description={item.description}
-              setIsModalOpen={setIsModalOpen}
-              setSelectedRestaurant={setSelectedRestaurant}
             />
           );
         })}

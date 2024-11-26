@@ -6,8 +6,9 @@ import { postRestaurant } from '../../api/restaurant';
 import { getRestaurant } from '../../api/restaurant';
 import { v4 as uuidv4 } from 'uuid';
 import { ModalConsumer } from '../../context/ModalContext';
+import { RestaurantsConsumer } from '../../context/RestaurantListContext';
 
-const AddRestaurantModal = ({ setRestaurantsList }) => {
+const AddRestaurantModal = () => {
   const [category, setCategory] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
@@ -35,13 +36,12 @@ const AddRestaurantModal = ({ setRestaurantsList }) => {
     description: description,
   };
 
-  const submitFormHandler = async () => {
+  const submitFormHandler = async (setRestaurants) => {
     try {
       const response = await postRestaurant(newRestaurant);
 
       if (response.ok) {
-        await getRestaurant(setRestaurantsList);
-        setIsAddModalOpen(false);
+        await getRestaurant(setRestaurants);
       } else {
         console.log(response);
       }
@@ -50,12 +50,12 @@ const AddRestaurantModal = ({ setRestaurantsList }) => {
     }
   };
 
-  const checkFormHandler = (e) => {
+  const checkFormHandler = (e, setRestaurants) => {
     e.preventDefault();
     const isFilledoutAll = validateFilledout();
 
     if (isFilledoutAll) {
-      submitFormHandler();
+      submitFormHandler(setRestaurants);
     }
   };
 

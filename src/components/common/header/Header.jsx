@@ -7,13 +7,12 @@ const Header = () => {
     <HeaderContainer>
       <Title>점심 뭐 먹지</Title>
       <ModalConsumer>
-        {(value) => {
-          console.log(value);
+        {({ actions: { setAddModal } }) => {
           return (
             <AddRestaurantButton
               type="button"
               aria-label="음식점 추가"
-              onClick={() => value.actions.setAddModal(true)}
+              onClick={() => setAddModal(true)}
             >
               <AddRestaurantImg src={addButton} alt="음식점 추가" />
             </AddRestaurantButton>
