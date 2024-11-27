@@ -1,25 +1,25 @@
 import styled from 'styled-components';
-import korean_icon from '../../../assets/category/category-korean.png';
-import asian_icon from '../../../assets/category/category-asian.png';
-import chinese_icon from '../../../assets/category/category-chinese.png';
-import etc_icon from '../../../assets/category/category-etc.png';
-import japanese_icon from '../../../assets/category/category-japanese.png';
-import western_icon from '../../../assets/category/category-western.png';
+import koreanIcon from '../../../assets/category/category-korean.png';
+import asianIcon from '../../../assets/category/category-asian.png';
+import chineseIcon from '../../../assets/category/category-chinese.png';
+import etcIcon from '../../../assets/category/category-etc.png';
+import japaneseIcon from '../../../assets/category/category-japanese.png';
+import westernIcon from '../../../assets/category/category-western.png';
 
 const getCategoryIcon = (alt) => {
   switch (alt) {
     case '한식':
-      return korean_icon;
+      return koreanIcon;
     case '중식':
-      return chinese_icon;
+      return chineseIcon;
     case '아시안':
-      return asian_icon;
+      return asianIcon;
     case '일식':
-      return japanese_icon;
+      return japaneseIcon;
     case '양식':
-      return western_icon;
+      return westernIcon;
     case '기타':
-      return etc_icon;
+      return etcIcon;
   }
 };
 
