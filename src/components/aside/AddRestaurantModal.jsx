@@ -1,0 +1,182 @@
+import { useState } from 'react';
+import styled from 'styled-components';
+import { CATEGORYOPTION } from '../constants/CategoryOption';
+import Modal from '../common/modal/Modal';
+import { postRestaurant } from '../../api/restaurant';
+import { getRestaurant } from '../../api/restaurant';
+import { v4 as uuidv4 } from 'uuid';
+
+const AddRestaurantModal = ({ setRestaurantsList, setIsAddModalOpen }) => {
+  const [category, setCategory] = useState('');
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+
+  const validateFilledout = () => {
+    if (!category) {
+      alert('카테고리를 선택해주세요');
+      return false;
+    }
+    if (!name) {
+      alert('이름을 입력해주세요');
+      return false;
+    }
+    if (!description) {
+      alert('설명을 입력해주세요');
+      return false;
+    }
+    return true;
+  };
+
+  const newRestaurant = {
+    id: uuidv4(),
+    category: category,
+    name: name,
+    description: description,
+  };
+
+  const submitFormHandler = async () => {
+    try {
+      const response = await postRestaurant(newRestaurant);
+
+      if (response.ok) {
+        await getRestaurant(setRestaurantsList);
+        setIsAddModalOpen(false);
+      } else {
+        console.log(response);
+      }
+    } catch (error) {
+      console.error('Error posting restaurants', error);
+    }
+  };
+
+  const checkFormHandler = (e) => {
+    e.preventDefault();
+    const isFilledoutAll = validateFilledout();
+
+    if (isFilledoutAll) {
+      submitFormHandler();
+      setIsAddModalOpen(false);
+    }
+  };
+
+  return (
+    <Modal title="새로운 음식점" onClose={() => setIsAddModalOpen(false)}>
+      <form onSubmit={(e) => checkFormHandler(e)}>
+        <FormItemBox>
+          <StyledLabel required htmlFor="category">
+            카테고리
+          </StyledLabel>
+          <select
+            name="category"
+            id="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <option value="">선택해 주세요</option>
+            {CATEGORYOPTION.map((option) => {
+              return (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              );
+            })}
+          </select>
+        </FormItemBox>
+        <FormItemBox>
+          <StyledLabel required htmlFor="name">
+            이름
+          </StyledLabel>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            onChange={(e) => setName(e.target.value)}
+          />
+        </FormItemBox>
+        <FormItemBox>
+          <StyledLabel htmlFor="description">설명</StyledLabel>
+          <textarea
+            name="description"
+            id="description"
+            cols="30"
+            rows="5"
+            onChange={(e) => setDescription(e.target.value)}
+          ></textarea>
+          <span>메뉴 등 추가 정보를 입력해 주세요.</span>
+        </FormItemBox>
+        <ButtonConatiner>
+          <StyledButton type="submit">추가하기</StyledButton>
+        </ButtonConatiner>
+      </form>
+    </Modal>
+  );
+};
+
+export default AddRestaurantModal;
+
+const FormItemBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 36px;
+
+  & > select {
+    color: ${(props) => props.theme.grey300};
+  }
+
+  & > span {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+
+  input,
+  textarea,
+  select {
+    padding: 8px;
+    margin: 6px 0;
+    border: 1px solid ${(props) => props.theme.grey200};
+    border-radius: 8px;
+    font-size: 16px;
+    width: 100%;
+  }
+
+  input[name='name'],
+  input[name='link'] {
+    height: 44px;
+  }
+`;
+
+const StyledLabel = styled.label`
+  color: ${(props) => props.theme.grey400};
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+
+  &::after {
+    ${(props) =>
+      props.required &&
+      `
+        padding-left: 4px;
+        color: ${props.theme.primaryColor};
+        content: '*';
+      `}
+  }
+`;
+
+const ButtonConatiner = styled.div`
+  display: flex;
+`;
+
+const StyledButton = styled.button`
+  width: 100%;
+  height: 44px;
+  margin-right: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: ${(props) => props.theme.primaryColor};
+  color: ${(props) => props.theme.grey100};
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 20px;
+`;
