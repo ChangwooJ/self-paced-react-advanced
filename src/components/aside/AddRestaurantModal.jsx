@@ -63,31 +63,33 @@ const AddRestaurantModal = ({ setRestaurantsList, setIsAddModalOpen }) => {
     <Modal title="새로운 음식점" onClose={() => setIsAddModalOpen(false)}>
       <form onSubmit={(e) => checkFormHandler(e)}>
         <FormItemBox>
-          <StyledLabel htmlFor="category">카테고리</StyledLabel>
+          <StyledLabel required htmlFor="category">
+            카테고리
+          </StyledLabel>
           <select
             name="category"
             id="category"
-            required
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="">선택해 주세요</option>
-            {CATEGORYOPTION.map((option, idx) => {
+            {CATEGORYOPTION.map((option) => {
               return (
-                <option key={idx} value={option}>
-                  {option}
+                <option key={option.id} value={option.name}>
+                  {option.name}
                 </option>
               );
             })}
           </select>
         </FormItemBox>
         <FormItemBox>
-          <StyledLabel htmlFor="name">이름</StyledLabel>
+          <StyledLabel required htmlFor="name">
+            이름
+          </StyledLabel>
           <input
             type="text"
             name="name"
             id="name"
-            required
             onChange={(e) => setName(e.target.value)}
           />
         </FormItemBox>
@@ -151,9 +153,13 @@ const StyledLabel = styled.label`
   font-weight: 400;
 
   &::after {
-    padding-left: 4px;
-    color: ${(props) => props.theme.primaryColor};
-    content: '*';
+    ${(props) =>
+      props.required &&
+      `
+        padding-left: 4px;
+        color: ${props.theme.primaryColor};
+        content: '*';
+      `}
   }
 `;
 
