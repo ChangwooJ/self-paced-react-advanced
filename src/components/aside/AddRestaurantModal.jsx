@@ -75,8 +75,8 @@ const AddRestaurantModal = ({ setRestaurantsList, setIsAddModalOpen }) => {
             <option value="">선택해 주세요</option>
             {CATEGORYOPTION.map((option) => {
               return (
-                <option key={option.id} value={option.name}>
-                  {option.name}
+                <option key={option} value={option}>
+                  {option}
                 </option>
               );
             })}
