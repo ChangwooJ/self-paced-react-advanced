@@ -13,10 +13,10 @@ const CategoryFilter = ({ category, onChangeCategory }) => {
           onChange={(e) => onChangeCategory(e.target.value)}
         >
           <option value="전체">전체</option>
-          {CATEGORYOPTION.map((option, idx) => {
+          {CATEGORYOPTION.map((option) => {
             return (
-              <option key={idx} value={option}>
-                {option}
+              <option key={option.id} value={option.name}>
+                {option.name}
               </option>
             );
           })}
