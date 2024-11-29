@@ -2,9 +2,6 @@ import './App.css';
 import { ThemeProvider } from 'styled-components';
 import Main from './components/main/main/Main';
 import Aside from './components/aside/Aside';
-import { ModalProvider } from './context/ModalContext';
-import { RestaurantsProvider } from './context/RestaurantListContext';
-import { SelectedRestaurantProvider } from './context/SelectedRestaurantContext';
 
 const theme = {
   primaryColor: 'var(--primary-color)',
@@ -19,14 +16,8 @@ const theme = {
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <ModalProvider>
-        <RestaurantsProvider>
-          <SelectedRestaurantProvider>
-            <Main />
-            <Aside />
-          </SelectedRestaurantProvider>
-        </RestaurantsProvider>
-      </ModalProvider>
+      <Main />
+      <Aside />
     </ThemeProvider>
   );
 }

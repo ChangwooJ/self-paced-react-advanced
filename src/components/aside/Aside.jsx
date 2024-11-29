@@ -1,19 +1,16 @@
 import RestaurantDetailModal from './RestaurantDetailModal';
 import AddRestaurantModal from './AddRestaurantModal';
-import { ModalConsumer } from '../../context/ModalContext';
+import { ModalContext } from '../../context/ModalContext';
+import { useContext } from 'react';
 
 function Aside() {
+  const { detailModal, addModal } = useContext(ModalContext);
+
   return (
-    <ModalConsumer>
-      {({ state: { detailModal, addModal } }) => {
-        return (
-          <aside>
-            {detailModal && <RestaurantDetailModal />}
-            {addModal && <AddRestaurantModal />}
-          </aside>
-        );
-      }}
-    </ModalConsumer>
+    <aside>
+      {detailModal && <RestaurantDetailModal />}
+      {addModal && <AddRestaurantModal />}
+    </aside>
   );
 }
 

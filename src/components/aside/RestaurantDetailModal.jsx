@@ -1,33 +1,27 @@
 import Modal from '../common/modal/Modal';
 import styled from 'styled-components';
-import { ModalConsumer } from '../../context/ModalContext';
-import { SelectedRestaurantConsumer } from '../../context/SelectedRestaurantContext';
+import { ModalContext } from '../../context/ModalContext';
+import { SelectedRestaurantContext } from '../../context/SelectedRestaurantContext';
+import { useContext } from 'react';
 
 const RestaurantDetailModal = () => {
+  const { selectedRestaurant } = useContext(SelectedRestaurantContext);
+  const { setDetailModal } = useContext(ModalContext);
+
   return (
-    <ModalConsumer>
-      {({ actions: { setDetailModal } }) => (
-        <SelectedRestaurantConsumer>
-          {({ state: { selectedRestaurant } }) => (
-            <Modal
-              title={selectedRestaurant.name}
-              onClose={() => setDetailModal(false)}
-            >
-              <RestaurantInfoBox>
-                <RestaurantDescription>
-                  {selectedRestaurant.description}
-                </RestaurantDescription>
-              </RestaurantInfoBox>
-              <ButtonContainer>
-                <StyledButton onClick={() => setDetailModal(false)}>
-                  닫기
-                </StyledButton>
-              </ButtonContainer>
-            </Modal>
-          )}
-        </SelectedRestaurantConsumer>
-      )}
-    </ModalConsumer>
+    <Modal
+      title={selectedRestaurant.name}
+      onClose={() => setDetailModal(false)}
+    >
+      <RestaurantInfoBox>
+        <RestaurantDescription>
+          {selectedRestaurant.description}
+        </RestaurantDescription>
+      </RestaurantInfoBox>
+      <ButtonContainer>
+        <StyledButton onClick={() => setDetailModal(false)}>닫기</StyledButton>
+      </ButtonContainer>
+    </Modal>
   );
 };
 

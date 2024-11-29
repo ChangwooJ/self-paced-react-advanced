@@ -8,10 +8,7 @@ const SelectedRestaurantProvider = ({ children }) => {
     description: '',
   });
 
-  const value = {
-    state: { selectedRestaurant },
-    action: { setSelectedRestaurant },
-  };
+  const value = { selectedRestaurant, setSelectedRestaurant };
 
   return (
     <SelectedRestaurantContext.Provider value={value}>
@@ -20,8 +17,4 @@ const SelectedRestaurantProvider = ({ children }) => {
   );
 };
 
-const { Consumer: SelectedRestaurantConsumer } = SelectedRestaurantContext;
-
-export { SelectedRestaurantProvider, SelectedRestaurantConsumer };
-
-export default SelectedRestaurantContext;
+export { SelectedRestaurantProvider, SelectedRestaurantContext };

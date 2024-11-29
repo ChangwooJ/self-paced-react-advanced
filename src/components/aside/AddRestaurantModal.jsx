@@ -5,13 +5,17 @@ import Modal from '../common/modal/Modal';
 import { postRestaurant } from '../../api/restaurant';
 import { getRestaurant } from '../../api/restaurant';
 import { v4 as uuidv4 } from 'uuid';
-import { ModalConsumer } from '../../context/ModalContext';
-import { RestaurantsConsumer } from '../../context/RestaurantListContext';
+import { useContext } from 'react';
+import { RestaurantsContext } from '../../context/RestaurantListContext';
+import { ModalContext } from '../../context/ModalContext';
 
 const AddRestaurantModal = () => {
   const [category, setCategory] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+
+  const { setRestaurants } = useContext(RestaurantsContext);
+  const { setAddModal } = useContext(ModalContext);
 
   const validateFilledout = () => {
     if (!category) {
@@ -36,7 +40,7 @@ const AddRestaurantModal = () => {
     description: description,
   };
 
-  const submitFormHandler = async (setRestaurants) => {
+  const submitFormHandler = async () => {
     try {
       const response = await postRestaurant(newRestaurant);
 
@@ -50,7 +54,7 @@ const AddRestaurantModal = () => {
     }
   };
 
-  const checkFormHandler = (e, setRestaurants) => {
+  const checkFormHandler = (e) => {
     e.preventDefault();
     const isFilledoutAll = validateFilledout();
 
@@ -60,15 +64,19 @@ const AddRestaurantModal = () => {
   };
 
   return (
-    <Modal title="새로운 음식점" onClose={() => setIsAddModalOpen(false)}>
-      <form onSubmit={(e) => checkFormHandler(e)}>
+    <Modal title="새로운 음식점" onClose={() => setAddModal(false)}>
+      <form
+        onSubmit={(e) => {
+          checkFormHandler(e, setRestaurants);
+          setAddModal(false);
+        }}
+      >
         <FormItemBox>
-          <StyledLabel required htmlFor="category">
-            카테고리
-          </StyledLabel>
+          <StyledLabel htmlFor="category">카테고리</StyledLabel>
           <select
             name="category"
             id="category"
+            required
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >

@@ -10,10 +10,7 @@ const RestaurantsProvider = ({ children }) => {
     getRestaurant(setRestaurants);
   }, []);
 
-  const value = {
-    state: { restaurants },
-    action: { setRestaurants },
-  };
+  const value = { restaurants, setRestaurants };
 
   return (
     <RestaurantsContext.Provider value={value}>
@@ -22,8 +19,4 @@ const RestaurantsProvider = ({ children }) => {
   );
 };
 
-const { Consumer: RestaurantsConsumer } = RestaurantsContext;
-
-export { RestaurantsProvider, RestaurantsConsumer, RestaurantsContext };
-
-export default RestaurantsContext;
+export { RestaurantsProvider, RestaurantsContext };

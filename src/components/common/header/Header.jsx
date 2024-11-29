@@ -1,24 +1,21 @@
 import styled from 'styled-components';
 import addButton from '../../../assets/button/add-button.png';
-import { ModalConsumer } from '../../../context/ModalContext';
+import { ModalContext } from '../../../context/ModalContext';
+import { useContext } from 'react';
 
 const Header = () => {
+  const { setAddModal } = useContext(ModalContext);
+
   return (
     <HeaderContainer>
       <Title>점심 뭐 먹지</Title>
-      <ModalConsumer>
-        {({ actions: { setAddModal } }) => {
-          return (
-            <AddRestaurantButton
-              type="button"
-              aria-label="음식점 추가"
-              onClick={() => setAddModal(true)}
-            >
-              <AddRestaurantImg src={addButton} alt="음식점 추가" />
-            </AddRestaurantButton>
-          );
-        }}
-      </ModalConsumer>
+      <AddRestaurantButton
+        type="button"
+        aria-label="음식점 추가"
+        onClick={() => setAddModal(true)}
+      >
+        <AddRestaurantImg src={addButton} alt="음식점 추가" />
+      </AddRestaurantButton>
     </HeaderContainer>
   );
 };

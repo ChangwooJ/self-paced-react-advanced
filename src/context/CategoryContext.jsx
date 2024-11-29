@@ -5,10 +5,7 @@ const CategoryContext = createContext();
 const CategoryProvider = ({ children }) => {
   const [category, setCategory] = useState('전체');
 
-  const value = {
-    state: { category },
-    action: { setCategory },
-  };
+  const value = { category, setCategory };
 
   return (
     <CategoryContext.Provider value={value}>
@@ -17,8 +14,4 @@ const CategoryProvider = ({ children }) => {
   );
 };
 
-const { Consumer: CategoryConsumer } = CategoryContext;
-
-export { CategoryProvider, CategoryConsumer };
-
-export default CategoryContext;
+export { CategoryProvider, CategoryContext };

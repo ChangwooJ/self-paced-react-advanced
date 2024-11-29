@@ -6,18 +6,11 @@ const ModalProvider = ({ children }) => {
   const [detailModal, setDetailModal] = useState(false);
   const [addModal, setAddModal] = useState(false);
 
-  const value = {
-    state: { detailModal, addModal },
-    actions: { setDetailModal, setAddModal },
-  };
+  const value = { detailModal, setDetailModal, addModal, setAddModal };
 
   return (
     <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
   );
 };
 
-const { Consumer: ModalConsumer } = ModalContext;
-
-export { ModalProvider, ModalConsumer };
-
-export default ModalContext;
+export { ModalProvider, ModalContext };
