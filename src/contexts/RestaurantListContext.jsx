@@ -6,17 +6,15 @@ export const RestaurantListContext = createContext();
 export function RestaurantListProvider({ children }) {
   const [restaurantList, setRestaurantList] = useState([]);
 
-  useEffect(() => {
-    getRestaurantList().then((data) => {
-      setRestaurantList(data);
-    });
-  }, []);
-
   const updateRestaurantList = () => {
     getRestaurantList().then((data) => {
       setRestaurantList(data);
     });
   };
+
+  useEffect(() => {
+    updateRestaurantList();
+  }, []);
 
   return (
     <RestaurantListContext.Provider

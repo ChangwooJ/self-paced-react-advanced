@@ -3,7 +3,7 @@ import { createContext, useState } from "react";
 export const ModalContext = createContext();
 
 export function ModalProvider({ children }) {
-  const [modal, setModal] = useState({
+  const [detailModal, setDetailModal] = useState({
     isOpen: false,
     restaurant: { name: "", description: "" },
   });
@@ -11,7 +11,14 @@ export function ModalProvider({ children }) {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   return (
-    <ModalContext.Provider value={{ modal, setModal, isAddModalOpen, setIsAddModalOpen }}>
+    <ModalContext.Provider
+      value={{
+        detailModal: detailModal,
+        setDetailModal: setDetailModal,
+        isAddModalOpen,
+        setIsAddModalOpen,
+      }}
+    >
       {children}
     </ModalContext.Provider>
   );

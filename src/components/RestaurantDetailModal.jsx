@@ -11,21 +11,23 @@ import {
 import { ModalContext } from "../contexts/ModalContext";
 
 function RestaurantDetailModal() {
-  const { modal, setModal } = useContext(ModalContext);
+  const { detailModal, setDetailModal } = useContext(ModalContext);
 
   return (
     <RestaurantDetailModalContainer>
       <Modal>
-        <ModalBackdrop onClick={() => setModal({ ...modal, isOpen: false })}></ModalBackdrop>
+        <ModalBackdrop
+          onClick={() => setDetailModal({ ...detailModal, isOpen: false })}
+        ></ModalBackdrop>
         <ModalContainer>
-          <Title className="text-title">{modal.restaurant.name}</Title>
+          <Title className="text-title">{detailModal.restaurant.name}</Title>
           <RestaurantInfo>
-            <p className="text-body">{modal.restaurant.description}</p>
+            <p className="text-body">{detailModal.restaurant.description}</p>
           </RestaurantInfo>
           <ButtonContainer>
             <button
               className="button button--primary text-caption"
-              onClick={() => setModal({ ...modal, isOpen: false })}
+              onClick={() => setDetailModal({ ...detailModal, isOpen: false })}
             >
               닫기
             </button>

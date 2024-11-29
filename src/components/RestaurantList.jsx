@@ -19,11 +19,11 @@ const CATEGORY_IN_ENGLISH = Object.freeze({
 
 function RestaurantList() {
   const { restaurantList: restaurants } = useContext(RestaurantListContext);
-  const { modal, setModal } = useContext(ModalContext);
+  const { detailModal, setDetailModal } = useContext(ModalContext);
 
   const handleRestaurantClick = (restaurant) => {
-    setModal({
-      ...modal,
+    setDetailModal({
+      ...detailModal,
       isOpen: true,
       restaurant: {
         name: restaurant.name,
