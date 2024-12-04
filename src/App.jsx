@@ -5,7 +5,6 @@ import CategoryFilter from "./components/CategoryFilter.jsx";
 import RestaurantList from "./components/RestaurantList.jsx";
 import AddRestaurantModal from "./components/AddRestaurantModal.jsx";
 import RestaurantDetailModal from "./components/RestaurantDetailModal.jsx";
-import { getRestaurantList } from "./api/restaurantAPI";
 import { RestaurantListContext } from "./contexts/RestaurantListContext";
 import { ModalContext } from "./contexts/ModalContext";
 

@@ -13,8 +13,8 @@ export function ModalProvider({ children }) {
   return (
     <ModalContext.Provider
       value={{
-        detailModal: detailModal,
-        setDetailModal: setDetailModal,
+        detailModal,
+        setDetailModal,
         isAddModalOpen,
         setIsAddModalOpen,
       }}
