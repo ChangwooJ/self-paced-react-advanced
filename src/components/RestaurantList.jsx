@@ -7,6 +7,7 @@ import {
 } from "../style/RestaurantListStyle";
 import { RestaurantListContext } from "../contexts/RestaurantListContext";
 import { ModalContext } from "../contexts/ModalContext";
+import { CategoryContext } from "../contexts/CategoryContext";
 
 const CATEGORY_IN_ENGLISH = Object.freeze({
   한식: "korean",
@@ -18,8 +19,15 @@ const CATEGORY_IN_ENGLISH = Object.freeze({
 });
 
 function RestaurantList() {
-  const { restaurantList: restaurants } = useContext(RestaurantListContext);
+  const { restaurantList } = useContext(RestaurantListContext);
   const { detailModal, setDetailModal } = useContext(ModalContext);
+  const { category } = useContext(CategoryContext);
+
+  const filterRestaurants = (category) => {
+    if (category === "전체") return restaurantList;
+    else return restaurantList.filter((restaurant) => restaurant.category === category);
+  };
+  const filteredRestaurants = filterRestaurants(category);
 
   const handleRestaurantClick = (restaurant) => {
     setDetailModal({
@@ -35,7 +43,7 @@ function RestaurantList() {
   return (
     <RestaurantListContainer>
       <ul className="restaurant-list">
-        {restaurants.map((restaurant) => (
+        {filteredRestaurants.map((restaurant) => (
           <Restaurant key={restaurant.id} onClick={() => handleRestaurantClick(restaurant)}>
             <RestaurantCategory>
               <img
