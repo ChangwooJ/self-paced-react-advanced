@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 import { getRestaurantList } from "../api/restaurantAPI";
 
 export const RestaurantListContext = createContext();
@@ -6,15 +6,14 @@ export const RestaurantListContext = createContext();
 export function RestaurantListProvider({ children }) {
   const [restaurantList, setRestaurantList] = useState([]);
 
-  const updateRestaurantList = () => {
-    getRestaurantList().then((data) => {
+  const updateRestaurantList = async () => {
+    try {
+      const data = await getRestaurantList();
       setRestaurantList(data);
-    });
+    } catch (error) {
+      console.error("Failed to fetch restaurant list:", error);
+    }
   };
-
-  useEffect(() => {
-    updateRestaurantList();
-  }, []);
 
   return (
     <RestaurantListContext.Provider

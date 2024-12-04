@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { CATEGORY_DATA } from "../data/categoryData";
 import { addRestaurant } from "../api/restaurantAPI";
 import { useState, useContext } from "react";
@@ -16,6 +17,10 @@ import { RestaurantListContext } from "../contexts/RestaurantListContext";
 function AddRestaurantModal() {
   const { setIsAddModalOpen } = useContext(ModalContext);
   const { updateRestaurantList } = useContext(RestaurantListContext);
+
+  useEffect(() => {
+    updateRestaurantList();
+  }, []);
 
   const [newRestaurant, setNewRestaurant] = useState({
     id: Date.now(),
