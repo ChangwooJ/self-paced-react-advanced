@@ -26,10 +26,7 @@ const AddRestaurantModal = () => {
       alert('이름을 입력해주세요');
       return false;
     }
-    if (!description) {
-      alert('설명을 입력해주세요');
-      return false;
-    }
+
     return true;
   };
 
@@ -46,6 +43,7 @@ const AddRestaurantModal = () => {
 
       if (response.ok) {
         await getRestaurant(setRestaurants);
+        setAddModal(false);
       } else {
         console.log(response);
       }
@@ -55,24 +53,26 @@ const AddRestaurantModal = () => {
   };
 
   const checkFormHandler = (e) => {
-    e.preventDefault();
     const isFilledoutAll = validateFilledout();
 
-    if (isFilledoutAll) {
-      submitFormHandler(setRestaurants);
+    if (!isFilledoutAll) {
+      e.preventDefault();
     }
+
+    submitFormHandler(setRestaurants);
   };
 
   return (
     <Modal title="새로운 음식점" onClose={() => setAddModal(false)}>
       <form
         onSubmit={(e) => {
-          checkFormHandler(e, setRestaurants);
-          setAddModal(false);
+          checkFormHandler(e);
         }}
       >
         <FormItemBox>
-          <StyledLabel htmlFor="category">카테고리</StyledLabel>
+          <StyledLabel isRequired={true} htmlFor="category">
+            카테고리
+          </StyledLabel>
           <select
             name="category"
             id="category"
@@ -91,13 +91,14 @@ const AddRestaurantModal = () => {
           </select>
         </FormItemBox>
         <FormItemBox>
-          <StyledLabel required htmlFor="name">
+          <StyledLabel isRequired={true} htmlFor="name">
             이름
           </StyledLabel>
           <input
             type="text"
             name="name"
             id="name"
+            required
             onChange={(e) => setName(e.target.value)}
           />
         </FormItemBox>
@@ -154,7 +155,9 @@ const FormItemBox = styled.div`
   }
 `;
 
-const StyledLabel = styled.label`
+const StyledLabel = styled.label.withConfig({
+  shouldForwardProp: (prop) => prop !== 'isRequired',
+})`
   color: ${(props) => props.theme.grey400};
   font-size: 14px;
   line-height: 20px;
@@ -162,7 +165,7 @@ const StyledLabel = styled.label`
 
   &::after {
     ${(props) =>
-      props.required &&
+      props.isRequired &&
       `
         padding-left: 4px;
         color: ${props.theme.primaryColor};
