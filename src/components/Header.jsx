@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import { HeaderContainer, Title, HeaderButton } from "../style/HeaderStyle";
+import { ModalContext } from "../contexts/ModalContext";
 
-function Header({ setIsAddModalOpen }) {
+function Header() {
+  const { setIsAddModalOpen } = useContext(ModalContext);
+
   return (
     <HeaderContainer>
       <Title className="text-title">점심 뭐 먹지</Title>

@@ -1,59 +1,31 @@
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import Header from "./components/Header.jsx";
 import CategoryFilter from "./components/CategoryFilter.jsx";
 import RestaurantList from "./components/RestaurantList.jsx";
 import AddRestaurantModal from "./components/AddRestaurantModal.jsx";
 import RestaurantDetailModal from "./components/RestaurantDetailModal.jsx";
-import { getRestaurantList } from "./api/restaurantAPI";
+import { RestaurantListContext } from "./contexts/RestaurantListContext";
+import { ModalContext } from "./contexts/ModalContext";
 
 function App() {
-  const [category, setCategory] = useState("전체");
-  const [restaurantList, setRestaurantList] = useState([]);
+  const { detailModal, isAddModalOpen } = useContext(ModalContext);
+  const { updateRestaurantList } = useContext(RestaurantListContext);
 
   useEffect(() => {
-    getRestaurantList().then((data) => {
-      setRestaurantList(data);
-    });
+    updateRestaurantList();
   }, []);
-
-  const filterRestaurants = (category) => {
-    if (category === "전체") return restaurantList;
-    else return restaurantList.filter((restaurant) => restaurant.category === category);
-  };
-  const filteredRestaurants = filterRestaurants(category);
-
-  const [modal, setModal] = useState({
-    isOpen: false,
-    restaurant: {
-      name: "",
-      description: "",
-    },
-  });
-
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-
-  const updateRestaurantList = () => {
-    getRestaurantList().then((data) => {
-      setRestaurantList(data);
-    });
-  };
 
   return (
     <>
-      <Header setIsAddModalOpen={setIsAddModalOpen} />
+      <Header />
       <main>
-        <CategoryFilter category={category} onChangeCategory={setCategory} />
-        <RestaurantList restaurants={filteredRestaurants} setModal={setModal} modal={modal} />
+        <CategoryFilter />
+        <RestaurantList />
       </main>
       <aside>
-        {modal.isOpen && <RestaurantDetailModal setModal={setModal} modal={modal} />}
-        {isAddModalOpen && (
-          <AddRestaurantModal
-            setIsAddModalOpen={setIsAddModalOpen}
-            updateRestaurantList={updateRestaurantList}
-          />
-        )}
+        {detailModal.isOpen && <RestaurantDetailModal />}
+        {isAddModalOpen && <AddRestaurantModal />}
       </aside>
     </>
   );
