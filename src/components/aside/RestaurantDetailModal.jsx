@@ -1,18 +1,25 @@
 import Modal from '../common/modal/Modal';
 import styled from 'styled-components';
+import { ModalContext } from '../../context/ModalContext';
+import { SelectedRestaurantContext } from '../../context/SelectedRestaurantContext';
+import { useContext } from 'react';
 
-const RestaurantDetailModal = ({
-  setIsModalOpen,
-  restaurantName,
-  restaurantDescription,
-}) => {
+const RestaurantDetailModal = () => {
+  const { selectedRestaurant } = useContext(SelectedRestaurantContext);
+  const { setDetailModal } = useContext(ModalContext);
+
   return (
-    <Modal title={restaurantName} onClose={() => setIsModalOpen(false)}>
+    <Modal
+      title={selectedRestaurant.name}
+      onClose={() => setDetailModal(false)}
+    >
       <RestaurantInfoBox>
-        <RestaurantDescription>{restaurantDescription}</RestaurantDescription>
+        <RestaurantDescription>
+          {selectedRestaurant.description}
+        </RestaurantDescription>
       </RestaurantInfoBox>
       <ButtonContainer>
-        <StyledButton onClick={() => setIsModalOpen(false)}>닫기</StyledButton>
+        <StyledButton onClick={() => setDetailModal(false)}>닫기</StyledButton>
       </ButtonContainer>
     </Modal>
   );

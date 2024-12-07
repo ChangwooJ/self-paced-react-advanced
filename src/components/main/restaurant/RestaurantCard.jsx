@@ -5,6 +5,9 @@ import chineseIcon from '../../../assets/category/category-chinese.png';
 import etcIcon from '../../../assets/category/category-etc.png';
 import japaneseIcon from '../../../assets/category/category-japanese.png';
 import westernIcon from '../../../assets/category/category-western.png';
+import { ModalContext } from '../../../context/ModalContext';
+import { SelectedRestaurantContext } from '../../../context/SelectedRestaurantContext';
+import { useContext } from 'react';
 
 const getCategoryIcon = (alt) => {
   switch (alt) {
@@ -23,22 +26,21 @@ const getCategoryIcon = (alt) => {
   }
 };
 
-const RestaurantCard = ({
-  alt,
-  name,
-  description,
-  setIsModalOpen,
-  setSelectedRestaurant,
-}) => {
+const RestaurantCard = ({ alt, name, description }) => {
   const image = getCategoryIcon(alt);
-
-  const handleCardClick = () => {
-    setIsModalOpen(true);
-    setSelectedRestaurant({ name, description });
-  };
+  const { setDetailModal } = useContext(ModalContext);
+  const { setSelectedRestaurant } = useContext(SelectedRestaurantContext);
 
   return (
-    <RestaurantCardBox onClick={handleCardClick}>
+    <RestaurantCardBox
+      onClick={() => {
+        setDetailModal(true);
+        setSelectedRestaurant({
+          name,
+          description,
+        });
+      }}
+    >
       <CategoryBox>
         <img src={image} alt={alt} />
       </CategoryBox>

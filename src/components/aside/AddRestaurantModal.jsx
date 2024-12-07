@@ -5,11 +5,17 @@ import Modal from '../common/modal/Modal';
 import { postRestaurant } from '../../api/restaurant';
 import { getRestaurant } from '../../api/restaurant';
 import { v4 as uuidv4 } from 'uuid';
+import { useContext } from 'react';
+import { RestaurantsContext } from '../../context/RestaurantListContext';
+import { ModalContext } from '../../context/ModalContext';
 
-const AddRestaurantModal = ({ setRestaurantsList, setIsAddModalOpen }) => {
+const AddRestaurantModal = () => {
   const [category, setCategory] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+
+  const { setRestaurants } = useContext(RestaurantsContext);
+  const { setAddModal } = useContext(ModalContext);
 
   const validateFilledout = () => {
     if (!category) {
@@ -20,10 +26,7 @@ const AddRestaurantModal = ({ setRestaurantsList, setIsAddModalOpen }) => {
       alert('이름을 입력해주세요');
       return false;
     }
-    if (!description) {
-      alert('설명을 입력해주세요');
-      return false;
-    }
+
     return true;
   };
 
@@ -39,8 +42,8 @@ const AddRestaurantModal = ({ setRestaurantsList, setIsAddModalOpen }) => {
       const response = await postRestaurant(newRestaurant);
 
       if (response.ok) {
-        await getRestaurant(setRestaurantsList);
-        setIsAddModalOpen(false);
+        await getRestaurant(setRestaurants);
+        setAddModal(false);
       } else {
         console.log(response);
       }
@@ -50,25 +53,30 @@ const AddRestaurantModal = ({ setRestaurantsList, setIsAddModalOpen }) => {
   };
 
   const checkFormHandler = (e) => {
-    e.preventDefault();
     const isFilledoutAll = validateFilledout();
 
-    if (isFilledoutAll) {
-      submitFormHandler();
-      setIsAddModalOpen(false);
+    if (!isFilledoutAll) {
+      e.preventDefault();
     }
+
+    submitFormHandler(setRestaurants);
   };
 
   return (
-    <Modal title="새로운 음식점" onClose={() => setIsAddModalOpen(false)}>
-      <form onSubmit={(e) => checkFormHandler(e)}>
+    <Modal title="새로운 음식점" onClose={() => setAddModal(false)}>
+      <form
+        onSubmit={(e) => {
+          checkFormHandler(e);
+        }}
+      >
         <FormItemBox>
-          <StyledLabel required htmlFor="category">
+          <StyledLabel isRequired={true} htmlFor="category">
             카테고리
           </StyledLabel>
           <select
             name="category"
             id="category"
+            required
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
@@ -83,13 +91,14 @@ const AddRestaurantModal = ({ setRestaurantsList, setIsAddModalOpen }) => {
           </select>
         </FormItemBox>
         <FormItemBox>
-          <StyledLabel required htmlFor="name">
+          <StyledLabel isRequired={true} htmlFor="name">
             이름
           </StyledLabel>
           <input
             type="text"
             name="name"
             id="name"
+            required
             onChange={(e) => setName(e.target.value)}
           />
         </FormItemBox>
@@ -146,7 +155,9 @@ const FormItemBox = styled.div`
   }
 `;
 
-const StyledLabel = styled.label`
+const StyledLabel = styled.label.withConfig({
+  shouldForwardProp: (prop) => prop !== 'isRequired',
+})`
   color: ${(props) => props.theme.grey400};
   font-size: 14px;
   line-height: 20px;
@@ -154,7 +165,7 @@ const StyledLabel = styled.label`
 
   &::after {
     ${(props) =>
-      props.required &&
+      props.isRequired &&
       `
         padding-left: 4px;
         color: ${props.theme.primaryColor};

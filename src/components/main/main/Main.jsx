@@ -1,36 +1,29 @@
 import Header from '../../common/header/Header';
 import CategoryFilter from '../categoryFilter/CategoryFilter';
 import RestaurantList from '../restaurant/RestaurantList';
-import { useState } from 'react';
+import React from 'react';
+import { CategoryContext } from '../../../context/CategoryContext';
+import { useContext } from 'react';
+import { RestaurantsContext } from '../../../context/RestaurantListContext';
 
-function Main({
-  restaurantsList,
-  setIsModalOpen,
-  setSelectedRestaurant,
-  setIsAddModalOpen,
-}) {
-  const [category, setCategory] = useState('전체');
+const Main = () => {
+  const { category, setCategory } = useContext(CategoryContext);
+  const { restaurants } = useContext(RestaurantsContext);
 
   const filteredRestaurants =
     category === '전체'
-      ? restaurantsList
-      : restaurantsList.filter(
-          (restaurant) => restaurant.category === category
-        );
+      ? restaurants
+      : restaurants.filter((restaurant) => restaurant.category === category);
 
   return (
     <>
-      <Header onAddRestaurantClick={() => setIsAddModalOpen(true)} />
+      <Header />
       <main>
         <CategoryFilter category={category} onChangeCategory={setCategory} />
-        <RestaurantList
-          restaurants={filteredRestaurants}
-          setIsModalOpen={setIsModalOpen}
-          setSelectedRestaurant={setSelectedRestaurant}
-        />
+        <RestaurantList restaurants={filteredRestaurants} />
       </main>
     </>
   );
-}
+};
 
 export default Main;

@@ -1,29 +1,15 @@
 import RestaurantDetailModal from './RestaurantDetailModal';
 import AddRestaurantModal from './AddRestaurantModal';
+import { ModalContext } from '../../context/ModalContext';
+import { useContext } from 'react';
 
-function Aside({
-  isModalOpen,
-  isAddModalOpen,
-  selectedRestaurant,
-  setIsModalOpen,
-  setIsAddModalOpen,
-  setRestaurantsList,
-}) {
+function Aside() {
+  const { detailModal, addModal } = useContext(ModalContext);
+
   return (
     <aside>
-      {isModalOpen && (
-        <RestaurantDetailModal
-          setIsModalOpen={setIsModalOpen}
-          restaurantName={selectedRestaurant.name}
-          restaurantDescription={selectedRestaurant.description}
-        />
-      )}
-      {isAddModalOpen && (
-        <AddRestaurantModal
-          setIsAddModalOpen={setIsAddModalOpen}
-          setRestaurantsList={setRestaurantsList}
-        />
-      )}
+      {detailModal && <RestaurantDetailModal />}
+      {addModal && <AddRestaurantModal />}
     </aside>
   );
 }
