@@ -1,5 +1,6 @@
 import Categories from "../../data/Category.js";
 import styled from "styled-components";
+import { useRestaurantContext } from "../../contexts/RestaurantContext.jsx";
 
 const RestaurantFilterContainer = styled.section`
     display: flex;
@@ -18,8 +19,9 @@ const RestaurantFilterContainer = styled.section`
     }
 `;
 
-function CategoryFilter({ category, onChangeCategory }) {
+function CategoryFilter() {
     const categories = Categories();
+    const { category, setCategory } = useRestaurantContext();
 
     return (
         <RestaurantFilterContainer>
@@ -28,7 +30,7 @@ function CategoryFilter({ category, onChangeCategory }) {
                 id="category-filter"
                 aria-label="음식점 카테고리 필터"
                 value={category}
-                onChange={(event) => onChangeCategory(event.target.value)}
+                onChange={(event) => setCategory(event.target.value)}
             >
                 {categories.map((category) => (
                     <option

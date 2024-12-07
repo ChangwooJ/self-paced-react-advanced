@@ -1,5 +1,6 @@
 import Modal from "./Modal.jsx"
 import styled from "styled-components";
+import { useRestaurantContext } from "../../contexts/RestaurantContext.jsx";
 
 const RestaurantInfo = styled.div`
     display: flex;
@@ -32,13 +33,22 @@ const Button = styled.button`
     color: var(--grey-100);
 `;
 
-function RestaurantDetailModal({ restaurant, onChangeDetailModal }) {
+function RestaurantDetailModal() {
+    const { clickedRestaurantItem, toggleModal } = useRestaurantContext();
+
     return (
-        <Modal title={restaurant.name} onClose={onChangeDetailModal}>
+        <Modal
+            title={clickedRestaurantItem.name}
+            onClose={() => toggleModal("detail", false)}
+        >
             <RestaurantInfo>
-                <RestaurantInfoDescription>{restaurant.description}</RestaurantInfoDescription>
+                <RestaurantInfoDescription>
+                    {clickedRestaurantItem.description}
+                </RestaurantInfoDescription>
             </RestaurantInfo>
-            <ButtonContainer onClick={onChangeDetailModal}>
+            <ButtonContainer
+                onClick={() => toggleModal("detail", false)}
+            >
                 <Button>닫기</Button>
             </ButtonContainer>
         </Modal>

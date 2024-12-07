@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useRestaurantContext } from "../../contexts/RestaurantContext.jsx";
 
 const RestaurantWrapper = styled.li`
     display: flex;
@@ -51,11 +52,16 @@ const RestaurantDescription = styled.p`
     font-weight: 400;
 `;
 
-function RestaurantItem({ name, description, category, alt, onClick }) {
+function RestaurantItem({ name, description, category, alt }) {
+    const { toggleModal } = useRestaurantContext();
+
     return (
-        <RestaurantWrapper onClick={onClick}>
+        <RestaurantWrapper onClick={() => toggleModal("detail", true, { name, description })}>
           <RestaurantCategory>
-            <CategoryIcon src={convertCategoryToImageSrc(category)} alt={alt}></CategoryIcon>
+            <CategoryIcon
+                src={convertCategoryToImageSrc(category)}
+                alt={alt}>
+            </CategoryIcon>
           </RestaurantCategory>
           <RestaurantInfo>
             <RestaurantName>{name}</RestaurantName>

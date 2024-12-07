@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useRestaurantContext } from "../../contexts/RestaurantContext.jsx";
 
 const Gnb = styled.header`
     display: flex;
@@ -32,11 +33,17 @@ const GnbButton = styled.button`
     }
 `;
 
-function Header({ onChangeAddModal }) {
+function Header() {
+    const { toggleModal } = useRestaurantContext();
+
     return (
         <Gnb>
             <GnbTitle>점심 뭐 먹지</GnbTitle>
-            <GnbButton type="button" aria-label="음식점 추가" onClick={onChangeAddModal}>
+            <GnbButton
+                type="button"
+                aria-label="음식점 추가"
+                onClick={() => toggleModal("add", true)}
+            >
                 <img src="../templates/add-button.png" alt="음식점 추가"></img>
             </GnbButton>
         </Gnb>

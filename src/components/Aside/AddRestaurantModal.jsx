@@ -1,6 +1,7 @@
 import Categories from "../../data/Category.js";
 import Modal from "./Modal.jsx"
 import styled from "styled-components";
+import { useRestaurantContext } from "../../contexts/RestaurantContext.jsx";
 
 const FormItem = styled.div`
     display: flex;
@@ -11,7 +12,7 @@ const FormItem = styled.div`
         color: var(--grey-400);
         font-size: 14px;
 
-        ${(props) => props.isRequired &&
+        ${(props) => props.$isRequired &&
                 `
                 &::after {
                     padding-left: 4px;
@@ -79,7 +80,7 @@ const Button = styled.button`
     //font-weight: 400;
 `;
 
-function AddRestaurantModal({ onFormSubmit, onChangeAddModal }) {
+function AddRestaurantModal() {
     const categories = Categories().filter(
         (category) => category.name !== "전체"
     );
@@ -87,16 +88,18 @@ function AddRestaurantModal({ onFormSubmit, onChangeAddModal }) {
     const handleSubmit = (event) => {
         const formData = new FormData(event.target);
         const formJson = Object.fromEntries(formData.entries());
-        onFormSubmit(formJson);
+        toggleModal("add", false, null, formJson)
     }
+
+    const { toggleModal } = useRestaurantContext();
 
     return (
         <Modal 
             title="새로운 음식점" 
-            onClose={onChangeAddModal}
+            onClose={() => toggleModal("add", false)}
         >
             <form method="post" onSubmit={handleSubmit}>
-                <FormItem isRequired={true}>
+                <FormItem $isRequired={true}>
                     <label htmlFor="category">카테고리</label>
                     <FormSelect name="category" id="category" required>
                         <option value="">선택해 주세요</option>
@@ -105,11 +108,11 @@ function AddRestaurantModal({ onFormSubmit, onChangeAddModal }) {
                         ))}
                     </FormSelect>
                 </FormItem>
-                <FormItem isRequired={true}>
+                <FormItem $isRequired={true}>
                     <label htmlFor="name">이름</label>
                     <FormInput type="text" name="name" id="name" required></FormInput>
                 </FormItem>
-                <FormItem isRequired={true}>
+                <FormItem $isRequired={true}>
                     <label htmlFor="description">설명</label>
                     <FormTextArea name="description" id="description" cols="30" rows="5"></FormTextArea>
                     <FormHelpText>메뉴 등 추가 정보를 입력해 주세요.</FormHelpText>
