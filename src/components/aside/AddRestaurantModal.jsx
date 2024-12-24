@@ -5,17 +5,17 @@ import Modal from '../common/modal/Modal';
 import { postRestaurant } from '../../api/restaurant';
 import { getRestaurant } from '../../api/restaurant';
 import { v4 as uuidv4 } from 'uuid';
-import { useContext } from 'react';
-import { RestaurantsContext } from '../../context/RestaurantListContext';
-import { ModalContext } from '../../context/ModalContext';
+import { useSetRecoilState } from 'recoil';
+import { restaurantsState } from '../../recoil/RestaurantListState';
+import { addModalState } from '../../recoil/ModalState';
 
 const AddRestaurantModal = () => {
   const [category, setCategory] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
-  const { setRestaurants } = useContext(RestaurantsContext);
-  const { setAddModal } = useContext(ModalContext);
+  const setRestaurants = useSetRecoilState(restaurantsState);
+  const setAddModal = useSetRecoilState(addModalState);
 
   const validateFilledout = () => {
     if (!category) {
