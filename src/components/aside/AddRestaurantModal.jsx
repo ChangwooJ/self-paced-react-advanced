@@ -17,19 +17,6 @@ const AddRestaurantModal = () => {
   const setRestaurants = useSetRecoilState(restaurantsState);
   const setAddModal = useSetRecoilState(addModalState);
 
-  const validateFilledout = () => {
-    if (!category) {
-      alert('카테고리를 선택해주세요');
-      return false;
-    }
-    if (!name) {
-      alert('이름을 입력해주세요');
-      return false;
-    }
-
-    return true;
-  };
-
   const newRestaurant = {
     id: uuidv4(),
     category: category,
@@ -53,11 +40,7 @@ const AddRestaurantModal = () => {
   };
 
   const checkFormHandler = (e) => {
-    const isFilledoutAll = validateFilledout();
-
-    if (!isFilledoutAll) {
-      e.preventDefault();
-    }
+    e.preventDefault();
 
     submitFormHandler(setRestaurants);
   };
@@ -68,6 +51,7 @@ const AddRestaurantModal = () => {
         onSubmit={(e) => {
           checkFormHandler(e);
         }}
+        type="submit"
       >
         <FormItemBox>
           <StyledLabel isRequired={true} htmlFor="category">
@@ -114,7 +98,7 @@ const AddRestaurantModal = () => {
           <span>메뉴 등 추가 정보를 입력해 주세요.</span>
         </FormItemBox>
         <ButtonConatiner>
-          <StyledButton type="submit">추가하기</StyledButton>
+          <StyledButton>추가하기</StyledButton>
         </ButtonConatiner>
       </form>
     </Modal>
