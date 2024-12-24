@@ -1,7 +1,7 @@
 import Header from '../../common/header/Header';
 import CategoryFilter from '../categoryFilter/CategoryFilter';
 import RestaurantList from '../restaurant/RestaurantList';
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { categoryState } from '../../../recoil/CategoryState';
 import { restaurantsState } from '../../../recoil/RestaurantListState';
@@ -11,7 +11,7 @@ const Main = () => {
   const [category, setCategory] = useRecoilState(categoryState);
   const [restaurants, setRestaurants] = useRecoilState(restaurantsState);
 
-  useState(() => {
+  useEffect(() => {
     getRestaurant(setRestaurants);
   }, []);
 
