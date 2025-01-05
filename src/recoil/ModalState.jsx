@@ -1,12 +1,12 @@
 import { atom } from 'recoil';
 
 const detailModalState = atom({
-  key: 'detailModalState',
+  key: 'detailModal',
   default: false,
 });
 
 const addModalState = atom({
-  key: 'addModalState',
+  key: 'addModal',
   default: false,
 });
 

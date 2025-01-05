@@ -1,49 +1,44 @@
-import { useState } from 'react';
+import { useEffect, useState, startTransition } from 'react';
 import styled from 'styled-components';
 import { CATEGORYOPTION } from '../constants/CategoryOption';
 import Modal from '../common/modal/Modal';
-import { postRestaurant } from '../../api/restaurant';
-import { getRestaurant } from '../../api/restaurant';
 import { v4 as uuidv4 } from 'uuid';
-import { useSetRecoilState } from 'recoil';
-import { restaurantsState } from '../../recoil/RestaurantListState';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  newRestaurantState,
+  restaurantFormQuery,
+} from '../../recoil/RestaurantFormState';
 import { addModalState } from '../../recoil/ModalState';
+import { restaurantsState } from '../../recoil/RestaurantListState';
 
 const AddRestaurantModal = () => {
   const [category, setCategory] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
 
-  const setRestaurants = useSetRecoilState(restaurantsState);
+  const setNewRestaurant = useSetRecoilState(newRestaurantState);
   const setAddModal = useSetRecoilState(addModalState);
+  const restaurantForm = useRecoilValue(restaurantFormQuery);
+  const setRestaurants = useSetRecoilState(restaurantsState);
 
   const newRestaurant = {
     id: uuidv4(),
-    category: category,
-    name: name,
-    description: description,
-  };
-
-  const submitFormHandler = async () => {
-    try {
-      const response = await postRestaurant(newRestaurant);
-
-      if (response.ok) {
-        await getRestaurant(setRestaurants);
-        setAddModal(false);
-      } else {
-        console.log(response);
-      }
-    } catch (error) {
-      console.error('Error posting restaurants', error);
-    }
+    category,
+    name,
+    description,
   };
 
   const checkFormHandler = (e) => {
     e.preventDefault();
-
-    submitFormHandler(setRestaurants);
+    setNewRestaurant(newRestaurant);
   };
+
+  useEffect(() => {
+    if (restaurantForm.ok) {
+      setRestaurants((prev) => [...prev, newRestaurant]);
+      setAddModal(false);
+    }
+  }, [restaurantForm]);
 
   return (
     <Modal title="새로운 음식점" onClose={() => setAddModal(false)}>

@@ -1,8 +1,21 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
+import { getRestaurant } from '../api/restaurant';
 
 const restaurantsState = atom({
-  key: 'restaurantsState',
+  key: 'restaurants',
   default: [],
 });
 
-export { restaurantsState };
+const restaurantsQuery = selector({
+  key: 'restaurantsQuery',
+  get: async ({ get }) => {
+    get(restaurantsState);
+    const response = await getRestaurant();
+    if (response.error) {
+      return response.error;
+    }
+    return response;
+  },
+});
+
+export { restaurantsState, restaurantsQuery };

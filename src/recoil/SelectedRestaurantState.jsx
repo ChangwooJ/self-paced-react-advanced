@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
 const selectedRestaurantState = atom({
-  key: 'selectedRestaurantState',
+  key: 'selectedRestaurant',
   default: {
     name: '',
     description: '',
