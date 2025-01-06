@@ -4,7 +4,6 @@ import { postRestaurant, getRestaurant } from '../api/restaurant';
 const newRestaurantState = atom({
   key: 'newRestaurant',
   default: {
-    id: '',
     category: '',
     name: '',
     description: '',
@@ -25,7 +24,6 @@ const restaurantFormQuery = selector({
       return response.error;
     }
 
-    await getRestaurant();
     return response;
   },
 });
