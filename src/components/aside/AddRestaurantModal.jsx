@@ -1,4 +1,4 @@
-import { useEffect, useState, startTransition } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CATEGORYOPTION } from '../constants/CategoryOption';
 import Modal from '../common/modal/Modal';
@@ -15,6 +15,7 @@ const AddRestaurantModal = () => {
   const [category, setCategory] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const setNewRestaurant = useSetRecoilState(newRestaurantState);
   const setAddModal = useSetRecoilState(addModalState);
@@ -31,14 +32,15 @@ const AddRestaurantModal = () => {
   const checkFormHandler = (e) => {
     e.preventDefault();
     setNewRestaurant(newRestaurant);
+    setIsCompleted(true);
   };
 
   useEffect(() => {
-    if (restaurantForm.ok) {
+    if (isCompleted && restaurantForm.ok) {
       setRestaurants((prev) => [...prev, newRestaurant]);
       setAddModal(false);
     }
-  }, [restaurantForm]);
+  }, [isCompleted]);
 
   return (
     <Modal title="새로운 음식점" onClose={() => setAddModal(false)}>
