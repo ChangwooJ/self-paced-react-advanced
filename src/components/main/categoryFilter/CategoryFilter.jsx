@@ -1,7 +1,11 @@
 import styled from 'styled-components';
 import { CATEGORYOPTION } from '../../constants/CategoryOption';
+import { useDispatch } from 'react-redux';
+import { setCategory } from '../../../redux/categorySlice';
 
-const CategoryFilter = ({ category, onChangeCategory }) => {
+const CategoryFilter = ({ category }) => {
+  const dispatch = useDispatch();
+
   return (
     <main>
       <RestaurantFilterContainer>
@@ -10,7 +14,7 @@ const CategoryFilter = ({ category, onChangeCategory }) => {
           id="category-filter"
           value={category}
           aria-label="음식점 카테고리 필터"
-          onChange={(e) => onChangeCategory(e.target.value)}
+          onChange={(e) => dispatch(setCategory(e.target.value))}
         >
           <option value="전체">전체</option>
           {CATEGORYOPTION.map((option) => {

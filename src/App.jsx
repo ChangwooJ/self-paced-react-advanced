@@ -1,7 +1,7 @@
 import './App.css';
 import { ThemeProvider } from 'styled-components';
 import Aside from './components/aside/Aside';
-import { lazy, Suspense } from 'react';
+import Main from './components/main/main/Main';
 
 const theme = {
   primaryColor: 'var(--primary-color)',
@@ -13,14 +13,10 @@ const theme = {
   grey500: 'var(--grey-500)',
 };
 
-const Main = lazy(() => import('./components/main/main/Main'));
-
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Main />
-      </Suspense>
+      <Main />
       <Aside />
     </ThemeProvider>
   );

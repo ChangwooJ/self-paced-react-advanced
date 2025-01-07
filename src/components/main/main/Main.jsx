@@ -1,14 +1,18 @@
 import Header from '../../common/header/Header';
 import CategoryFilter from '../categoryFilter/CategoryFilter';
 import RestaurantList from '../restaurant/RestaurantList';
-import React from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { categoryState } from '../../../recoil/CategoryState';
-import { restaurantsQuery } from '../../../recoil/RestaurantListState';
+import React, { useEffect } from 'react';
+import { getRestaurant } from '../../../api/restaurant';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Main = () => {
-  const [category, setCategory] = useRecoilState(categoryState);
-  const restaurants = useRecoilValue(restaurantsQuery);
+  const dispatch = useDispatch();
+  const category = useSelector((state) => state.category.category);
+  const restaurants = useSelector((state) => state.restaurants.restaurants);
+
+  useEffect(() => {
+    getRestaurant(dispatch);
+  }, []);
 
   const filteredRestaurants =
     category === '전체'
@@ -18,9 +22,8 @@ const Main = () => {
   return (
     <>
       <Header />
-
       <main>
-        <CategoryFilter category={category} onChangeCategory={setCategory} />
+        <CategoryFilter category={category} />
         <RestaurantList restaurants={filteredRestaurants} />
       </main>
     </>
