@@ -1,6 +1,7 @@
 import Categories from "../../data/Category.js";
 import styled from "styled-components";
-import { useRestaurantContext } from "../../contexts/RestaurantContext.jsx";
+import { useRecoilState } from "recoil";
+import { categoryState } from "../../recoil/CategoryState.jsx";
 
 const RestaurantFilterContainer = styled.section`
     display: flex;
@@ -21,7 +22,7 @@ const RestaurantFilterContainer = styled.section`
 
 function CategoryFilter() {
     const categories = Categories();
-    const { category, setCategory } = useRestaurantContext();
+    const [ category, setCategory ] = useRecoilState(categoryState);
 
     return (
         <RestaurantFilterContainer>
@@ -32,9 +33,10 @@ function CategoryFilter() {
                 value={category}
                 onChange={(event) => setCategory(event.target.value)}
             >
-                {categories.map((category) => (
-                    <option
-                        key={category.id} value={category.name}>{category.name}</option>
+                {categories.map((cat) => (
+                    <option key={cat.id} value={cat.name}>
+                        {cat.name}
+                    </option>
                 ))}
             </select>
         </RestaurantFilterContainer>

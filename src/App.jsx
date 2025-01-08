@@ -4,10 +4,11 @@ import CategoryFilter from "./components/Main/CategoryFilter.jsx";
 import RestaurantDetailModal from "./components/Aside/RestaurantDetailModal.jsx";
 import AddRestaurantModal from "./components/Aside/AddRestaurantModal.jsx";
 import RestaurantList from "./components/Main/RestaurantList.jsx"
-import { useRestaurantContext } from "./contexts/RestaurantContext.jsx";
+import { useRecoilValue } from "recoil";
+import { modalState } from "./recoil/ModalState.jsx";
 
 function App() {
-  const { isModalOpen } = useRestaurantContext();
+  const { detail, add } = useRecoilValue(modalState);
 
   return (
     <>
@@ -17,10 +18,10 @@ function App() {
         <RestaurantList />
       </main>
       <aside>
-        {isModalOpen.detail &&
+        {detail &&
           <RestaurantDetailModal />
         }
-        {isModalOpen.add &&
+        {add &&
           <AddRestaurantModal />
         }
       </aside>

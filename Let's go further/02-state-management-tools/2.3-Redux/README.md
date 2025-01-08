@@ -41,7 +41,7 @@ import categorySlice from "./slices/categorySlice.js";
 const rootReducer = combineReducers({
     isAddModalSlice : isAddModalSlice,
     isModalSlice : isModalSlice,
-    restaurants: restaurantsSlice,
+    restaurantListState: restaurantsSlice,
     category: categorySlice,
 });
 

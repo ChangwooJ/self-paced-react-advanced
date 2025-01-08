@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { useRestaurantContext } from "../../contexts/RestaurantContext.jsx";
+import { useSetRecoilState} from "recoil";
+import {modalState} from "../../recoil/ModalState.jsx";
 
 const Gnb = styled.header`
     display: flex;
@@ -34,7 +35,14 @@ const GnbButton = styled.button`
 `;
 
 function Header() {
-    const { toggleModal } = useRestaurantContext();
+    const setIsModalState = useSetRecoilState(modalState);
+
+    const openAddModal = () => {
+        setIsModalState((prev) => ({
+            ...prev,
+            add: true,
+        }));
+    };
 
     return (
         <Gnb>
@@ -42,7 +50,7 @@ function Header() {
             <GnbButton
                 type="button"
                 aria-label="음식점 추가"
-                onClick={() => toggleModal("add", true)}
+                onClick={openAddModal}
             >
                 <img src="../templates/add-button.png" alt="음식점 추가"></img>
             </GnbButton>
