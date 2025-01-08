@@ -1,15 +1,21 @@
 import RestaurantDetailModal from './RestaurantDetailModal';
 import AddRestaurantModal from './AddRestaurantModal';
-import { ModalContext } from '../../context/ModalContext';
-import { useContext } from 'react';
+import { useRecoilValue } from 'recoil';
+import { detailModalState, addModalState } from '../../recoil/ModalState';
+import { Suspense } from 'react';
 
 function Aside() {
-  const { detailModal, addModal } = useContext(ModalContext);
+  const detailModal = useRecoilValue(detailModalState);
+  const addModal = useRecoilValue(addModalState);
 
   return (
     <aside>
       {detailModal && <RestaurantDetailModal />}
-      {addModal && <AddRestaurantModal />}
+      {addModal && (
+        <Suspense fallback={<div>Loading...</div>}>
+          <AddRestaurantModal />
+        </Suspense>
+      )}
     </aside>
   );
 }

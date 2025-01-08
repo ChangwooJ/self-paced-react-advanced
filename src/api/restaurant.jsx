@@ -1,13 +1,9 @@
-export const getRestaurant = async (setRestaurantsList) => {
+export const getRestaurant = async (setRestaurants) => {
   try {
     const response = await fetch('http://localhost:3000/restaurants');
     const jsonData = await response.json();
 
-    if (response.ok) {
-      setRestaurantsList(jsonData);
-    } else {
-      console.error('Failed to fetch restaurants:', response.statusText);
-    }
+    return jsonData;
   } catch (error) {
     console.error('Error fetching restaurants:', error);
   }
