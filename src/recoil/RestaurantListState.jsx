@@ -9,12 +9,14 @@ const restaurantsState = atom({
 const restaurantsQuery = selector({
   key: 'restaurantsQuery',
   get: async ({ get }) => {
-    get(restaurantsState);
-    const response = await getRestaurant();
-    if (response.error) {
-      return response.error;
+    const currentRestaurants = get(restaurantsState);
+    try {
+      const updatedRestaurants = await getRestaurant();
+      return updatedRestaurants || currentRestaurants;
+    } catch (error) {
+      console.error('Error fetching restaurants:', error);
+      return currentRestaurants;
     }
-    return response;
   },
 });
 
