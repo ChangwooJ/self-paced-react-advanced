@@ -3,13 +3,17 @@ import styled from 'styled-components';
 import { CATEGORYOPTION } from '../constants/CategoryOption';
 import Modal from '../common/modal/Modal';
 import { v4 as uuidv4 } from 'uuid';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  useRecoilValue,
+  useSetRecoilState,
+  useRecoilRefresher_UNSTABLE,
+} from 'recoil';
 import {
   newRestaurantState,
   restaurantFormQuery,
 } from '../../recoil/RestaurantFormState';
 import { addModalState } from '../../recoil/ModalState';
-import { restaurantsState } from '../../recoil/RestaurantListState';
+import { restaurantsQuery } from '../../recoil/RestaurantListState';
 
 const AddRestaurantModal = () => {
   const [category, setCategory] = useState('');
@@ -20,7 +24,7 @@ const AddRestaurantModal = () => {
   const setNewRestaurant = useSetRecoilState(newRestaurantState);
   const setAddModal = useSetRecoilState(addModalState);
   const restaurantForm = useRecoilValue(restaurantFormQuery);
-  const setRestaurants = useSetRecoilState(restaurantsState);
+  const refreshRestaurants = useRecoilRefresher_UNSTABLE(restaurantsQuery);
 
   const newRestaurant = {
     id: uuidv4(),
@@ -37,7 +41,7 @@ const AddRestaurantModal = () => {
 
   useEffect(() => {
     if (isCompleted && restaurantForm.ok) {
-      setRestaurants((prev) => [...prev, newRestaurant]);
+      refreshRestaurants();
       setAddModal(false);
     }
   }, [isCompleted]);
