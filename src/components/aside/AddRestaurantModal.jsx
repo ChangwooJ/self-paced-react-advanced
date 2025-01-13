@@ -29,11 +29,9 @@ const AddRestaurantModal = () => {
       if (response.ok) {
         await getRestaurant(dispatch);
         dispatch(setAddModal(false));
-      } else {
-        console.log(response);
       }
     } catch (error) {
-      console.error('Error posting restaurants', error);
+      alert('새로운 레스토랑 추가 도중 문제가 발생했습니다.');
     }
   };
 

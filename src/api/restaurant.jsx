@@ -9,7 +9,7 @@ export const getRestaurant = async (dispatch) => {
       dispatch(saveRestaurants(jsonData));
     }
   } catch (error) {
-    alert('Error fetching restaurants');
+    alert('새로운 레스토랑을 불러오는 중에 문제가 생겼습니다.');
   }
 };
 
