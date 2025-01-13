@@ -7,11 +7,9 @@ export const getRestaurant = async (dispatch) => {
 
     if (response.ok) {
       dispatch(saveRestaurants(jsonData));
-    } else {
-      console.error('Failed to fetch restaurants:', response.statusText);
     }
   } catch (error) {
-    console.error('Error fetching restaurants:', error);
+    alert('Error fetching restaurants');
   }
 };
 
