@@ -1,17 +1,16 @@
 import Modal from '../common/modal/Modal';
 import styled from 'styled-components';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { detailModalState } from '../../recoil/ModalState';
-import { selectedRestaurantState } from '../../recoil/SelectedRestaurantState';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDetailModal } from '../../redux/modalSlice';
 
 const RestaurantDetailModal = () => {
-  const selectedRestaurant = useRecoilValue(selectedRestaurantState);
-  const setDetailModal = useSetRecoilState(detailModalState);
+  const selectedRestaurant = useSelector((state) => state.selectedRestaurant);
+  const dispatch = useDispatch();
 
   return (
     <Modal
       title={selectedRestaurant.name}
-      onClose={() => setDetailModal(false)}
+      onClose={() => dispatch(setDetailModal(false))}
     >
       <RestaurantInfoBox>
         <RestaurantDescription>
@@ -19,7 +18,9 @@ const RestaurantDetailModal = () => {
         </RestaurantDescription>
       </RestaurantInfoBox>
       <ButtonContainer>
-        <StyledButton onClick={() => setDetailModal(false)}>닫기</StyledButton>
+        <StyledButton onClick={() => dispatch(setDetailModal(false))}>
+          닫기
+        </StyledButton>
       </ButtonContainer>
     </Modal>
   );

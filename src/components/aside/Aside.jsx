@@ -1,21 +1,14 @@
 import RestaurantDetailModal from './RestaurantDetailModal';
 import AddRestaurantModal from './AddRestaurantModal';
-import { useRecoilValue } from 'recoil';
-import { detailModalState, addModalState } from '../../recoil/ModalState';
-import { Suspense } from 'react';
+import { useSelector } from 'react-redux';
 
 function Aside() {
-  const detailModal = useRecoilValue(detailModalState);
-  const addModal = useRecoilValue(addModalState);
+  const { detailModal, addModal } = useSelector((state) => state.modal);
 
   return (
     <aside>
       {detailModal && <RestaurantDetailModal />}
-      {addModal && (
-        <Suspense fallback={<div>Loading...</div>}>
-          <AddRestaurantModal />
-        </Suspense>
-      )}
+      {addModal && <AddRestaurantModal />}
     </aside>
   );
 }

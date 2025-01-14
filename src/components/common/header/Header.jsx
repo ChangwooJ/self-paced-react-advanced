@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 import addButton from '../../../assets/button/add-button.png';
-import { useSetRecoilState } from 'recoil';
-import { addModalState } from '../../../recoil/ModalState';
+import { useDispatch } from 'react-redux';
+import { setAddModal } from '../../../redux/modalSlice';
 
 const Header = () => {
-  const setAddModal = useSetRecoilState(addModalState);
+  const dispatch = useDispatch();
 
   return (
     <HeaderContainer>
@@ -12,7 +12,7 @@ const Header = () => {
       <AddRestaurantButton
         type="button"
         aria-label="음식점 추가"
-        onClick={() => setAddModal(true)}
+        onClick={() => dispatch(setAddModal(true))}
       >
         <AddRestaurantImg src={addButton} alt="음식점 추가" />
       </AddRestaurantButton>

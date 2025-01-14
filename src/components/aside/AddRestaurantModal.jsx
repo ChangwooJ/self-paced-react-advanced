@@ -1,53 +1,48 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { CATEGORYOPTION } from '../constants/CategoryOption';
 import Modal from '../common/modal/Modal';
+import { postRestaurant } from '../../api/restaurant';
+import { getRestaurant } from '../../api/restaurant';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  useRecoilValue,
-  useSetRecoilState,
-  useRecoilRefresher_UNSTABLE,
-} from 'recoil';
-import {
-  newRestaurantState,
-  restaurantFormQuery,
-} from '../../recoil/RestaurantFormState';
-import { addModalState } from '../../recoil/ModalState';
-import { restaurantsQuery } from '../../recoil/RestaurantListState';
+import { useDispatch } from 'react-redux';
+import { setAddModal } from '../../redux/modalSlice';
 
 const AddRestaurantModal = () => {
+  const dispatch = useDispatch();
+
   const [category, setCategory] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [isCompleted, setIsCompleted] = useState(false);
-
-  const setNewRestaurant = useSetRecoilState(newRestaurantState);
-  const setAddModal = useSetRecoilState(addModalState);
-  const restaurantForm = useRecoilValue(restaurantFormQuery);
-  const refreshRestaurants = useRecoilRefresher_UNSTABLE(restaurantsQuery);
 
   const newRestaurant = {
     id: uuidv4(),
-    category,
-    name,
-    description,
+    category: category,
+    name: name,
+    description: description,
+  };
+
+  const submitFormHandler = async () => {
+    try {
+      const response = await postRestaurant(newRestaurant);
+
+      if (response.ok) {
+        await getRestaurant(dispatch);
+        dispatch(setAddModal(false));
+      }
+    } catch (error) {
+      alert('새로운 레스토랑 추가 도중 문제가 발생했습니다.');
+    }
   };
 
   const checkFormHandler = (e) => {
     e.preventDefault();
-    setNewRestaurant(newRestaurant);
-    setIsCompleted(true);
+
+    submitFormHandler();
   };
 
-  useEffect(() => {
-    if (isCompleted && restaurantForm.ok) {
-      refreshRestaurants();
-      setAddModal(false);
-    }
-  }, [isCompleted]);
-
   return (
-    <Modal title="새로운 음식점" onClose={() => setAddModal(false)}>
+    <Modal title="새로운 음식점" onClose={() => dispatch(setAddModal(false))}>
       <form
         onSubmit={(e) => {
           checkFormHandler(e);

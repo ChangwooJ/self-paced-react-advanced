@@ -5,9 +5,9 @@ import chineseIcon from '../../../assets/category/category-chinese.png';
 import etcIcon from '../../../assets/category/category-etc.png';
 import japaneseIcon from '../../../assets/category/category-japanese.png';
 import westernIcon from '../../../assets/category/category-western.png';
-import { useSetRecoilState } from 'recoil';
-import { detailModalState } from '../../../recoil/ModalState';
-import { selectedRestaurantState } from '../../../recoil/SelectedRestaurantState';
+import { useDispatch } from 'react-redux';
+import { setDetailModal } from '../../../redux/modalSlice';
+import { setSelectedRestaurant } from '../../../redux/selectedRestaurantSlice';
 
 const getCategoryIcon = (alt) => {
   switch (alt) {
@@ -28,19 +28,15 @@ const getCategoryIcon = (alt) => {
 
 const RestaurantCard = ({ alt, name, description }) => {
   const image = getCategoryIcon(alt);
-  const setDetailModal = useSetRecoilState(detailModalState);
-  const setSelectedRestaurant = useSetRecoilState(selectedRestaurantState);
+  const dispatch = useDispatch();
+
+  const handleCardClick = () => {
+    dispatch(setDetailModal(true));
+    dispatch(setSelectedRestaurant({ name: name, description: description }));
+  };
 
   return (
-    <RestaurantCardBox
-      onClick={() => {
-        setDetailModal(true);
-        setSelectedRestaurant({
-          name,
-          description,
-        });
-      }}
-    >
+    <RestaurantCardBox onClick={handleCardClick}>
       <CategoryBox>
         <img src={image} alt={alt} />
       </CategoryBox>
