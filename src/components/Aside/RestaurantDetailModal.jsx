@@ -1,8 +1,7 @@
 import Modal from "./Modal.jsx"
 import styled from "styled-components";
-import {useRecoilValue, useSetRecoilState} from "recoil";
-import {modalState} from "../../recoil/ModalState.jsx";
-import {clickedRestaurantState} from "../../recoil/ClickedRestaurantState.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { closeDetailModal } from "../../store/ModalSlice.js";
 
 const RestaurantInfo = styled.div`
     display: flex;
@@ -36,28 +35,25 @@ const Button = styled.button`
 `;
 
 function RestaurantDetailModal() {
-    const { name, description} = useRecoilValue(clickedRestaurantState);
-    const setIsModalOpen = useSetRecoilState(modalState);
+    const dispatch = useDispatch();
+    const clickedRestaurant = useSelector((state) => state.clickedRestaurant);
 
-    const closeDetailModal = () => {
-        setIsModalOpen((prev) => ({
-            ...prev,
-            detail: false,
-        }));
+    const handleClose = () => {
+        dispatch(closeDetailModal());
     };
 
     return (
         <Modal
-            title={name}
-            onClose={closeDetailModal}
+            title={clickedRestaurant.name}
+            onClose={handleClose}
         >
             <RestaurantInfo>
                 <RestaurantInfoDescription>
-                    {description}
+                    {clickedRestaurant.description}
                 </RestaurantInfoDescription>
             </RestaurantInfo>
             <ButtonContainer
-                onClick={closeDetailModal}
+                onClick={handleClose}
             >
                 <Button>닫기</Button>
             </ButtonContainer>

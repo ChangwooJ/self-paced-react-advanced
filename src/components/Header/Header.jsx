@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { useSetRecoilState} from "recoil";
-import {modalState} from "../../recoil/ModalState.jsx";
+import {useDispatch} from "react-redux";
+import {openAddModal} from "../../store/ModalSlice.js";
 
 const Gnb = styled.header`
     display: flex;
@@ -35,13 +35,10 @@ const GnbButton = styled.button`
 `;
 
 function Header() {
-    const setIsModalState = useSetRecoilState(modalState);
+    const dispatch = useDispatch();
 
-    const openAddModal = () => {
-        setIsModalState((prev) => ({
-            ...prev,
-            add: true,
-        }));
+    const handleOpen = () => {
+        dispatch(openAddModal());
     };
 
     return (
@@ -50,7 +47,7 @@ function Header() {
             <GnbButton
                 type="button"
                 aria-label="음식점 추가"
-                onClick={openAddModal}
+                onClick={handleOpen}
             >
                 <img src="../templates/add-button.png" alt="음식점 추가"></img>
             </GnbButton>

@@ -1,7 +1,7 @@
 import Categories from "../../data/Category.js";
 import styled from "styled-components";
-import { useRecoilState } from "recoil";
-import { categoryState } from "../../recoil/CategoryState.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import { changeCategory } from "../../store/CategorySlice.js";
 
 const RestaurantFilterContainer = styled.section`
     display: flex;
@@ -21,8 +21,9 @@ const RestaurantFilterContainer = styled.section`
 `;
 
 function CategoryFilter() {
+    const dispatch = useDispatch();
+    const { category } = useSelector((state) => state.category);
     const categories = Categories();
-    const [ category, setCategory ] = useRecoilState(categoryState);
 
     return (
         <RestaurantFilterContainer>
@@ -31,7 +32,7 @@ function CategoryFilter() {
                 id="category-filter"
                 aria-label="음식점 카테고리 필터"
                 value={category}
-                onChange={(event) => setCategory(event.target.value)}
+                onChange={(event) => dispatch(changeCategory(event.target.value))}
             >
                 {categories.map((cat) => (
                     <option key={cat.id} value={cat.name}>

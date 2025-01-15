@@ -4,11 +4,10 @@ import CategoryFilter from "./components/Main/CategoryFilter.jsx";
 import RestaurantDetailModal from "./components/Aside/RestaurantDetailModal.jsx";
 import AddRestaurantModal from "./components/Aside/AddRestaurantModal.jsx";
 import RestaurantList from "./components/Main/RestaurantList.jsx"
-import { useRecoilValue } from "recoil";
-import { modalState } from "./recoil/ModalState.jsx";
+import { useSelector } from "react-redux";
 
 function App() {
-  const { detail, add } = useRecoilValue(modalState);
+  const { detail, add } = useSelector((state) => state.modal);
 
   return (
     <>
