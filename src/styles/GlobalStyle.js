@@ -25,5 +25,15 @@ export const Typography = {
     line-height: 20px;
     font-weight: 400;
     color: ${({ color }) => color || '#000'};
+    
+    ${({ required }) =>
+      required &&
+      `
+        &::after {
+          content: '*';
+          padding-left: 4px;
+          color: var(--primary-color);
+        }
+    `}
   `,
 };

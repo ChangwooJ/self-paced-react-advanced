@@ -11,20 +11,6 @@ const FormItem = styled.div`
   margin-bottom: 36px;
 `;
 
-const Label = styled(Typography.Caption)`
-  color: var(--grey-400);
-
-  ${({ required }) =>
-    required &&
-    `
-    &::after {
-      content: '*';
-      padding-left: 4px;
-      color: var(--primary-color);
-    }
-  `}
-`;
-
 const Input = styled.input`
   padding: 8px;
   margin: 6px 0;
@@ -110,9 +96,9 @@ const AddRestaurantModal = ({ isOpen, setIsAddModalOpen }) => {
       </Typography.Title>
       <form>
         <FormItem>
-          <Label htmlFor="category" required>
+          <Typography.Caption htmlFor="category" color="var(--grey-400)" required>
             카테고리
-          </Label>
+          </Typography.Caption>
           <Select
             id="category"
             name="category"
@@ -131,9 +117,9 @@ const AddRestaurantModal = ({ isOpen, setIsAddModalOpen }) => {
         </FormItem>
 
         <FormItem>
-          <Label htmlFor="name" required>
+          <Typography.Caption htmlFor="name" color="var(--grey-400)" required>
             이름
-          </Label>
+          </Typography.Caption>
           <Input
             type="text"
             name="name"
@@ -146,9 +132,9 @@ const AddRestaurantModal = ({ isOpen, setIsAddModalOpen }) => {
         </FormItem>
 
         <FormItem>
-          <Label htmlFor="description">
+          <Typography.Caption htmlFor="description" color="var(--grey-400)">
             설명
-          </Label>
+          </Typography.Caption>
           <TextArea
             name="description"
             id="description"
