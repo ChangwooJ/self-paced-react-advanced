@@ -23,6 +23,4 @@ export const typography = {
   `
 };
 
-const GlobalStyle = createGlobalStyle``;
-
 export default GlobalStyle; 

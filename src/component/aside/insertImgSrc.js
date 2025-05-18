@@ -7,7 +7,7 @@ import {
   etcCategoryImg,
 } from '../../const/categoryImage';
 
-const insertImgSrc = {
+const INSERT_IMG_SRC = {
   한식: koreanCategoryImg,
   중식: chineseCategoryImg,
   일식: japaneseCategoryImg,
@@ -16,4 +16,4 @@ const insertImgSrc = {
   기타: etcCategoryImg,
 };
 
-export default insertImgSrc;
+export default INSERT_IMG_SRC;

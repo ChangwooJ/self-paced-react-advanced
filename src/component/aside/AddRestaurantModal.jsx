@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { typography } from '../../styles/GlobalStyle';
 import insertImgSrc from '../utils/insertImgSrc';
 import Modal from './Modal';
+import Button from '../Button';
 
 const ModalTitle = styled.h2`
   ${typography.title}
@@ -19,11 +20,15 @@ const Label = styled.label`
   ${typography.caption}
   color: var(--grey-400);
 
-  &::after {
-    content: ${({ required }) => required ? "'*'" : 'none'};
-    padding-left: 4px;
-    color: var(--primary-color);
-  }
+  ${({ required }) =>
+    required &&
+    `
+    &::after {
+      content: '*';
+      padding-left: 4px;
+      color: var(--primary-color);
+    }
+  `}
 `;
 
 const HelpText = styled.span`
@@ -63,36 +68,17 @@ const ButtonContainer = styled.div`
   display: flex;
 `;
 
-const Button = styled.button`
-  width: 100%;
-  height: 44px;
-  margin-right: 16px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  background: var(--primary-color);
-  color: var(--grey-100);
-
-  &:last-child {
-    margin-right: 0;
-  }
-
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-`;
+const initForm = {
+  category: "",
+  name: "",
+  description: "",
+  imgSrc: null,
+};
 
 const AddRestaurantModal = ({ isOpen, setIsAddModalOpen }) => {
-  const initForm = {
-    category: "",
-    name: "",
-    description: "",
-    imgSrc: null,
-  };
   const [form, setForm] = useState(initForm);
   const [loading, setLoading] = useState(false);
+  const [required, setRequired] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

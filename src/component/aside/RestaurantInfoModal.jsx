@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { typography } from '../../styles/GlobalStyle';
 import Modal from './Modal';
+import Button from '../Button';
 
 const ModalTitle = styled.h2`
   ${typography.title}
@@ -18,22 +19,6 @@ const RestaurantDescription = styled.p`
 
 const ButtonContainer = styled.div`
   display: flex;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  height: 44px;
-  margin-right: 16px;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  background: var(--primary-color);
-  color: var(--grey-100);
-
-  &:last-child {
-    margin-right: 0;
-  }
 `;
 
 const RestaurantInfoModal = ({ isOpen, setIsModalOpen, selectedRestaurant, restaurants }) => {  
