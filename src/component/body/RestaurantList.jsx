@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { typography } from '../../styles/GlobalStyle';
+import { Typography } from '../../styles/GlobalStyle';
 import insertImgSrc from '../utils/insertImgSrc';
 
 const RestaurantListContainer = styled.section`
@@ -51,13 +51,7 @@ const RestaurantInfo = styled.div`
   justify-content: flex-start;
 `;
 
-const RestaurantName = styled.h3`
-  ${typography.subtitle}
-  margin: 0;
-`;
-
 const RestaurantDescription = styled.p`
-  ${typography.body}
   display: -webkit-box;
   padding-top: 8px;
   overflow: hidden;
@@ -87,11 +81,13 @@ const RestaurantListComponent = ({ restaurants, setIsModalOpen, setSelectedResta
               />
             </CategoryIcon>
             <RestaurantInfo>
-              <RestaurantName>
+              <Typography.Subtitle>
                 {restaurant.name}
-              </RestaurantName>
+              </Typography.Subtitle>
               <RestaurantDescription>
-                {restaurant.description}
+                <Typography.Body>
+                  {restaurant.description}
+                </Typography.Body>
               </RestaurantDescription>
             </RestaurantInfo>
           </RestaurantItem>

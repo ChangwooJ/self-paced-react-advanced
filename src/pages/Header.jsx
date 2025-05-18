@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { typography } from '../styles/GlobalStyle';
+import { Typography } from '../styles/GlobalStyle';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -8,11 +8,6 @@ const HeaderContainer = styled.header`
   height: 64px;
   padding: 0 16px;
   background-color: var(--primary-color);
-`;
-
-const Title = styled.h1`
-  ${typography.title}
-  color: #fcfcfd;
 `;
 
 const AddButton = styled.button`
@@ -34,7 +29,7 @@ const AddButtonImage = styled.img`
 const Header = ({ setIsAddModalOpen }) => {
   return (
     <HeaderContainer>
-      <Title>점심 뭐 먹지</Title>
+      <Typography.Title color="#fcfcfd">점심 뭐 먹지</Typography.Title>
       <AddButton
         type="button"
         aria-label="음식점 추가"

@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { typography } from '../../styles/GlobalStyle';
+import { Typography } from '../../styles/GlobalStyle';
 import insertImgSrc from '../utils/insertImgSrc';
 import Modal from './Modal';
 import Button from '../Button';
-
-const ModalTitle = styled.h2`
-  ${typography.title}
-  margin-bottom: 36px;
-`;
 
 const FormItem = styled.div`
   display: flex;
@@ -16,8 +11,7 @@ const FormItem = styled.div`
   margin-bottom: 36px;
 `;
 
-const Label = styled.label`
-  ${typography.caption}
+const Label = styled(Typography.Caption)`
   color: var(--grey-400);
 
   ${({ required }) =>
@@ -29,11 +23,6 @@ const Label = styled.label`
       color: var(--primary-color);
     }
   `}
-`;
-
-const HelpText = styled.span`
-  ${typography.caption}
-  color: var(--grey-300);
 `;
 
 const Input = styled.input`
@@ -64,10 +53,6 @@ const Select = styled.select`
   color: var(--grey-300);
 `;
 
-const ButtonContainer = styled.div`
-  display: flex;
-`;
-
 const initForm = {
   category: "",
   name: "",
@@ -78,25 +63,8 @@ const initForm = {
 const AddRestaurantModal = ({ isOpen, setIsAddModalOpen }) => {
   const [form, setForm] = useState(initForm);
   const [loading, setLoading] = useState(false);
-  const [required, setRequired] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    if (name === "category") {
-      setForm({ ...form, category: value, imgSrc: insertImgSrc[value] });
-    } else {
-      setForm({ ...form, [name]: value });
-    }
-  };
-
-  const handleUploadForm = async () => {
-    if (!form.category || !form.name) {
-      alert("레스토랑의 카테고리와 이름을 모두 입력해주세요!");
-      return;
-    }
-    setLoading(true);
-
+  const postNewRestaurant = async () => {
     try {
       await fetch("http://localhost:3000/restaurants", {
         method: "POST",
@@ -115,11 +83,31 @@ const AddRestaurantModal = ({ isOpen, setIsAddModalOpen }) => {
     }
   }
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name === "category") {
+      setForm({ ...form, category: value, imgSrc: insertImgSrc[value] });
+    } else {
+      setForm({ ...form, [name]: value });
+    }
+  };
+
+  const handleUploadForm = async () => {
+    if (!form.category || !form.name) {
+      alert("레스토랑의 카테고리와 이름을 모두 입력해주세요!");
+      return;
+    }
+    setLoading(true);
+
+    postNewRestaurant();
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={() => setIsAddModalOpen(false)}>
-      <ModalTitle>
+      <Typography.Title margin="0 0 36px 0">
         새로운 음식점
-      </ModalTitle>
+      </Typography.Title>
       <form>
         <FormItem>
           <Label htmlFor="category" required>
@@ -169,19 +157,16 @@ const AddRestaurantModal = ({ isOpen, setIsAddModalOpen }) => {
             value={form.description}
             onChange={handleChange}
           />
-          <HelpText>
+          <Typography.Caption color="var(--grey-300)">
             메뉴 등 추가 정보를 입력해 주세요.
-          </HelpText>
+          </Typography.Caption>
         </FormItem>
-
-        <ButtonContainer>
-          <Button
-            onClick={handleUploadForm}
-            disabled={loading}
-          >
-            추가하기
-          </Button>
-        </ButtonContainer>
+        <Button
+          onClick={handleUploadForm}
+          disabled={loading}
+        >
+          추가하기
+        </Button>
       </form>
     </Modal>
   );

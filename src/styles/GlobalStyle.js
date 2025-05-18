@@ -1,26 +1,29 @@
-import { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 
-export const typography = {
-  title: `
+export const Typography = {
+  Title: styled.h1`
     font-size: 20px;
     line-height: 24px;
     font-weight: 600;
+    color: ${({ color }) => color || '#000'};
+    margin: ${({ margin }) => margin || '0'};
   `,
-  subtitle: `
+  Subtitle: styled.h2`
     font-size: 18px;
     line-height: 28px;
     font-weight: 600;
+    color: ${({ color }) => color || '#000'};
   `,
-  body: `
+  Body: styled.p`
     font-size: 16px;
     line-height: 24px;
     font-weight: 400;
+    color: ${({ color }) => color || '#000'};
   `,
-  caption: `
+  Caption: styled.span`
     font-size: 14px;
     line-height: 20px;
     font-weight: 400;
-  `
+    color: ${({ color }) => color || '#000'};
+  `,
 };
-
-export default GlobalStyle; 

@@ -1,20 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { typography } from '../../styles/GlobalStyle';
+import { Typography } from '../../styles/GlobalStyle';
 import Modal from './Modal';
 import Button from '../Button';
 
-const ModalTitle = styled.h2`
-  ${typography.title}
-  margin-bottom: 36px;
-`;
 
 const RestaurantInfo = styled.div`
   margin-bottom: 24px;
-`;
-
-const RestaurantDescription = styled.p`
-  ${typography.body}
 `;
 
 const ButtonContainer = styled.div`
@@ -28,13 +20,13 @@ const RestaurantInfoModal = ({ isOpen, setIsModalOpen, selectedRestaurant, resta
     <Modal isOpen={isOpen} onClose={() => setIsModalOpen(false)}>
       {restaurant && (
         <>
-          <ModalTitle>
+          <Typography.Title margin="0 0 36px 0">
             {restaurant.name}
-          </ModalTitle>
+          </Typography.Title>
           <RestaurantInfo>
-            <RestaurantDescription>
+            <Typography.Body>
               {restaurant.description}
-            </RestaurantDescription>
+            </Typography.Body>
           </RestaurantInfo>
           <ButtonContainer>
             <Button onClick={() => setIsModalOpen(null)}>
