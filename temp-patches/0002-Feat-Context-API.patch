@@ -1,0 +1,418 @@
+From 47b1c9a6bdad6c619cc7e543a127702ff0283555 Mon Sep 17 00:00:00 2001
+From: ChangwooJ <wjdckddn99@naver.com>
+Date: Thu, 22 May 2025 13:08:06 +0900
+Subject: [PATCH 2/3] =?UTF-8?q?Feat:=20Context-API=20=EC=A0=81=EC=9A=A9?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ src/App.jsx                                 | 45 ++-----------
+ src/component/aside/AddRestaurantModal.jsx  | 38 ++++-------
+ src/component/aside/RestaurantInfoModal.jsx | 11 ++--
+ src/component/body/CategorySortFilter.jsx   | 10 ++-
+ src/component/body/RestaurantList.jsx       | 16 +++--
+ src/pages/Body.jsx                          | 25 +------
+ src/pages/Header.jsx                        |  5 +-
+ src/store/RestaurantContext.jsx             |  3 +
+ src/store/RestaurantProvider.jsx            | 73 +++++++++++++++++++++
+ 9 files changed, 129 insertions(+), 97 deletions(-)
+ create mode 100644 src/store/RestaurantContext.jsx
+ create mode 100644 src/store/RestaurantProvider.jsx
+
+diff --git a/src/App.jsx b/src/App.jsx
+index cecb6b7..770384c 100644
+--- a/src/App.jsx
++++ b/src/App.jsx
+@@ -1,49 +1,18 @@
+-import { useEffect, useState } from "react";
+ import "./App.css";
+ import Body from "./pages/Body";
+ import Header from "./pages/Header";
+ import RestaurantInfoModal from "./component/aside/RestaurantInfoModal";
+ import AddRestaurantModal from "./component/aside/AddRestaurantModal";
++import { RestaurantProvider } from "./store/RestaurantProvider";
+ 
+ function App() {
+-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+-  const [isModalOpen, setIsModalOpen] = useState(false);
+-  const [selectedRestaurant, setSelectedRestaurant] = useState("");
+-  const [restaurants, setRestaurants] = useState([]);
+-
+-  useEffect(() => {
+-    const fetchRestaurant = async () => {
+-      try {
+-        const response = await fetch("http://localhost:3000/restaurants");
+-        const restaurantData = await response.json();
+-        setRestaurants(restaurantData);
+-      } catch (error) {
+-        console.error("레스토랑 목록 불러오기 실패: ", error);
+-      }
+-    }
+-
+-    fetchRestaurant();
+-  }, [isAddModalOpen])
+-
+   return (
+-    <>
+-      <Header setIsAddModalOpen={setIsAddModalOpen} />
+-      <Body
+-        restaurants={restaurants}
+-        setIsModalOpen={setIsModalOpen}
+-        setSelectedRestaurant={setSelectedRestaurant}
+-      />
+-      <RestaurantInfoModal
+-        isOpen={isModalOpen}
+-        setIsModalOpen={setIsModalOpen}
+-        selectedRestaurant={selectedRestaurant}
+-        restaurants={restaurants}
+-      />
+-      <AddRestaurantModal
+-        isOpen={isAddModalOpen}
+-        setIsAddModalOpen={setIsAddModalOpen}
+-      />
+-    </>
++    <RestaurantProvider>
++      <Header />
++      <Body />
++      <RestaurantInfoModal />
++      <AddRestaurantModal />
++    </RestaurantProvider>
+   );
+ }
+ 
+diff --git a/src/component/aside/AddRestaurantModal.jsx b/src/component/aside/AddRestaurantModal.jsx
+index 1cb2547..44bfc98 100644
+--- a/src/component/aside/AddRestaurantModal.jsx
++++ b/src/component/aside/AddRestaurantModal.jsx
+@@ -1,9 +1,10 @@
+-import React, { useState } from 'react';
++import React, { useState, useContext } from 'react';
+ import styled from 'styled-components';
+ import { Typography } from '../../styles/GlobalStyle';
+ import insertImgSrc from '../utils/insertImgSrc';
+ import Modal from './Modal';
+ import Button from '../Button';
++import { RestaurantContext } from '../../store/RestaurantContext';
+ 
+ const FormItem = styled.div`
+   display: flex;
+@@ -46,29 +47,11 @@ const initForm = {
+   imgSrc: null,
+ };
+ 
+-const AddRestaurantModal = ({ isOpen, setIsAddModalOpen }) => {
++const AddRestaurantModal = () => {
++  const { isAddModalOpen, setIsAddModalOpen, addRestaurant } = useContext(RestaurantContext);
+   const [form, setForm] = useState(initForm);
+   const [loading, setLoading] = useState(false);
+ 
+-  const postNewRestaurant = async () => {
+-    try {
+-      await fetch("http://localhost:3000/restaurants", {
+-        method: "POST",
+-        headers: {
+-          "Content-Type": "application/json",
+-        },
+-        body: JSON.stringify(form),
+-      });
+-
+-      setForm(initForm);
+-      setIsAddModalOpen(false);
+-      setLoading(false);
+-    } catch (error) {
+-      console.error('레스토랑 추가 실패:', error);
+-      alert("레스토랑 추가에 실패했습니다.");
+-    }
+-  }
+-
+   const handleChange = (e) => {
+     const { name, value } = e.target;
+ 
+@@ -86,11 +69,18 @@ const AddRestaurantModal = ({ isOpen, setIsAddModalOpen }) => {
+     }
+     setLoading(true);
+ 
+-    postNewRestaurant();
+-  }
++    try {
++      await addRestaurant(form);
++      setForm(initForm);
++    } catch (error) {
++      alert("레스토랑 추가에 실패했습니다.");
++    } finally {
++      setLoading(false);
++    }
++  };
+ 
+   return (
+-    <Modal isOpen={isOpen} onClose={() => setIsAddModalOpen(false)}>
++    <Modal isOpen={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
+       <Typography.Title margin="0 0 36px 0">
+         새로운 음식점
+       </Typography.Title>
+diff --git a/src/component/aside/RestaurantInfoModal.jsx b/src/component/aside/RestaurantInfoModal.jsx
+index dc93787..342a649 100644
+--- a/src/component/aside/RestaurantInfoModal.jsx
++++ b/src/component/aside/RestaurantInfoModal.jsx
+@@ -1,9 +1,9 @@
+-import React from 'react';
++import React, { useContext } from 'react';
+ import styled from 'styled-components';
+ import { Typography } from '../../styles/GlobalStyle';
+ import Modal from './Modal';
+ import Button from '../Button';
+-
++import { RestaurantContext } from '../../store/RestaurantContext';
+ 
+ const RestaurantInfo = styled.div`
+   margin-bottom: 24px;
+@@ -13,11 +13,12 @@ const ButtonContainer = styled.div`
+   display: flex;
+ `;
+ 
+-const RestaurantInfoModal = ({ isOpen, setIsModalOpen, selectedRestaurant, restaurants }) => {  
++const RestaurantInfoModal = () => {  
++  const { isModalOpen, setIsModalOpen, selectedRestaurant, restaurants } = useContext(RestaurantContext);
+   const restaurant = restaurants.find(restaurant => restaurant.id === selectedRestaurant);
+ 
+   return (
+-    <Modal isOpen={isOpen} onClose={() => setIsModalOpen(false)}>
++    <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+       {restaurant && (
+         <>
+           <Typography.Title margin="0 0 36px 0">
+@@ -29,7 +30,7 @@ const RestaurantInfoModal = ({ isOpen, setIsModalOpen, selectedRestaurant, resta
+             </Typography.Body>
+           </RestaurantInfo>
+           <ButtonContainer>
+-            <Button onClick={() => setIsModalOpen(null)}>
++            <Button onClick={() => setIsModalOpen(false)}>
+               닫기
+             </Button>
+           </ButtonContainer>
+diff --git a/src/component/body/CategorySortFilter.jsx b/src/component/body/CategorySortFilter.jsx
+index 964dae0..f09f3c7 100644
+--- a/src/component/body/CategorySortFilter.jsx
++++ b/src/component/body/CategorySortFilter.jsx
+@@ -1,4 +1,6 @@
++import { useContext } from 'react';
+ import styled from 'styled-components';
++import { RestaurantContext } from '../../store/RestaurantContext';
+ 
+ const FilterContainer = styled.section`
+   display: flex;
+@@ -17,9 +19,11 @@ const CategorySelect = styled.select`
+   font-size: 16px;
+ `;
+ 
+-const CategorySortFilter = ({ selectedCategory, onChangeCategory }) => {
++const CategorySortFilter = () => {
++  const { category, setCategory } = useContext(RestaurantContext);
++
+   const handleChange = (e) => {
+-    onChangeCategory(e.target.value);
++    setCategory(e.target.value);
+   };
+ 
+   return (
+@@ -28,7 +32,7 @@ const CategorySortFilter = ({ selectedCategory, onChangeCategory }) => {
+         name="category"
+         id="category-filter"
+         aria-label="음식점 카테고리 필터"
+-        value={selectedCategory}
++        value={category}
+         onChange={handleChange}
+       >
+         <option value="전체">전체</option>
+diff --git a/src/component/body/RestaurantList.jsx b/src/component/body/RestaurantList.jsx
+index 6c94f3f..c0aedad 100644
+--- a/src/component/body/RestaurantList.jsx
++++ b/src/component/body/RestaurantList.jsx
+@@ -1,6 +1,8 @@
++import { useContext } from 'react';
+ import styled from 'styled-components';
+ import { Typography } from '../../styles/GlobalStyle';
+ import insertImgSrc from '../utils/insertImgSrc';
++import { RestaurantContext } from '../../store/RestaurantContext';
+ 
+ const RestaurantListContainer = styled.section`
+   display: flex;
+@@ -60,16 +62,22 @@ const RestaurantDescription = styled.p`
+   -webkit-box-orient: vertical;
+ `;
+ 
+-const RestaurantListComponent = ({ restaurants, setIsModalOpen, setSelectedRestaurant }) => {
+-  const handleRestaurantClick = (restaurant) => {
++const RestaurantListComponent = () => {
++  const { 
++    filteredRestaurants, 
++    setIsModalOpen, 
++    setSelectedRestaurant 
++  } = useContext(RestaurantContext);
++
++  const handleRestaurantClick = (restaurantId) => {
+     setIsModalOpen(true);
+-    setSelectedRestaurant(restaurant);
++    setSelectedRestaurant(restaurantId);
+   };
+ 
+   return (
+     <RestaurantListContainer>
+       <RestaurantList>
+-        {restaurants.map((restaurant) => (
++        {filteredRestaurants.map((restaurant) => (
+           <RestaurantItem 
+             key={restaurant.id} 
+             onClick={() => handleRestaurantClick(restaurant.id)}
+diff --git a/src/pages/Body.jsx b/src/pages/Body.jsx
+index 0fcca27..00ee4c3 100644
+--- a/src/pages/Body.jsx
++++ b/src/pages/Body.jsx
+@@ -1,30 +1,11 @@
+-import { useState } from 'react';
+ import CategorySortFilter from '../component/body/CategorySortFilter';
+ import RestaurantList from '../component/body/RestaurantList';
+ 
+-const Body = ({ restaurants, setIsModalOpen, setSelectedRestaurant }) => {
+-  const [category, setCategory] = useState('전체');
+-
+-  const filteredRestaurants =
+-    category === '전체'
+-      ? restaurants
+-      : restaurants.filter((restaurant) => restaurant.category === category);
+-
+-  const handleChangeCategory = (selectedCategory) => {
+-    setCategory(selectedCategory);
+-  };
+-
++const Body = () => {
+   return (
+     <>
+-      <CategorySortFilter
+-        category={category}
+-        onChangeCategory={handleChangeCategory}
+-      />
+-      <RestaurantList
+-        restaurants={filteredRestaurants}
+-        setIsModalOpen={setIsModalOpen}
+-        setSelectedRestaurant={setSelectedRestaurant}
+-      />
++      <CategorySortFilter />
++      <RestaurantList />
+     </>
+   );
+ };
+diff --git a/src/pages/Header.jsx b/src/pages/Header.jsx
+index 0a76324..deed060 100644
+--- a/src/pages/Header.jsx
++++ b/src/pages/Header.jsx
+@@ -1,5 +1,6 @@
+ import styled from 'styled-components';
+ import { Typography } from '../styles/GlobalStyle';
++import { RestaurantContext } from '../store/RestaurantContext';
+ 
+ const HeaderContainer = styled.header`
+   display: flex;
+@@ -26,7 +27,9 @@ const AddButtonImage = styled.img`
+   object-fit: contain;
+ `;
+ 
+-const Header = ({ setIsAddModalOpen }) => {
++const Header = () => {
++  const { setIsAddModalOpen } = useContext(RestaurantContext);
++
+   return (
+     <HeaderContainer>
+       <Typography.Title color="#fcfcfd">점심 뭐 먹지</Typography.Title>
+diff --git a/src/store/RestaurantContext.jsx b/src/store/RestaurantContext.jsx
+new file mode 100644
+index 0000000..1ea9725
+--- /dev/null
++++ b/src/store/RestaurantContext.jsx
+@@ -0,0 +1,3 @@
++import { createContext } from "react";
++
++export const RestaurantContext = createContext();
+diff --git a/src/store/RestaurantProvider.jsx b/src/store/RestaurantProvider.jsx
+new file mode 100644
+index 0000000..91c8352
+--- /dev/null
++++ b/src/store/RestaurantProvider.jsx
+@@ -0,0 +1,73 @@
++import { useState } from "react";
++import { RestaurantContext } from "./ThemeContext";
++
++function RestaurantProvider({ children }) {
++    const [restaurants, setRestaurants] = useState([]);
++    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
++    const [isModalOpen, setIsModalOpen] = useState(false);
++    const [selectedRestaurant, setSelectedRestaurant] = useState(null);
++    const [category, setCategory] = useState('전체');
++
++    useEffect(() => {
++        const fetchRestaurants = async () => {
++          try {
++            const response = await fetch("http://localhost:3000/restaurants");
++            const restaurantData = await response.json();
++            setRestaurants(restaurantData);
++          } catch (error) {
++            console.error("레스토랑 목록 불러오기 실패: ", error);
++          }
++        };
++    
++        fetchRestaurants();
++      }, [isAddModalOpen]);
++    
++      const addRestaurant = async (newRestaurant) => {
++        try {
++          const response = await fetch("http://localhost:3000/restaurants", {
++            method: "POST",
++            headers: {
++              "Content-Type": "application/json",
++            },
++            body: JSON.stringify(newRestaurant),
++          });
++          
++          if (!response.ok) {
++            throw new Error('레스토랑 추가 실패');
++          }
++    
++          const addedRestaurant = await response.json();
++          setRestaurants(prev => [...prev, addedRestaurant]);
++          setIsAddModalOpen(false);
++        } catch (error) {
++          console.error('레스토랑 추가 실패:', error);
++          throw error;
++        }
++      };
++    
++      const filteredRestaurants = category === '전체'
++        ? restaurants
++        : restaurants.filter(restaurant => restaurant.category === category);
++    
++      const value = {
++        restaurants,
++        filteredRestaurants,
++        isAddModalOpen,
++        setIsAddModalOpen,
++        isModalOpen,
++        setIsModalOpen,
++        selectedRestaurant,
++        setSelectedRestaurant,
++        category,
++        setCategory,
++        addRestaurant,
++      };
++
++  return (
++    <RestaurantContext.Provider value={value}>
++      {children}
++    </RestaurantContext.Provider>
++  );
++}
++
++export default RestaurantProvider;
+-- 
+2.44.0.windows.1
+
