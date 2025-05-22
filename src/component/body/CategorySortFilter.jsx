@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
+import { RestaurantContext } from '../../store/RestaurantContext';
 
 const FilterContainer = styled.section`
   display: flex;
@@ -17,9 +19,11 @@ const CategorySelect = styled.select`
   font-size: 16px;
 `;
 
-const CategorySortFilter = ({ selectedCategory, onChangeCategory }) => {
+const CategorySortFilter = () => {
+  const { category, setCategory } = useContext(RestaurantContext);
+
   const handleChange = (e) => {
-    onChangeCategory(e.target.value);
+    setCategory(e.target.value);
   };
 
   return (
@@ -28,7 +32,7 @@ const CategorySortFilter = ({ selectedCategory, onChangeCategory }) => {
         name="category"
         id="category-filter"
         aria-label="음식점 카테고리 필터"
-        value={selectedCategory}
+        value={category}
         onChange={handleChange}
       >
         <option value="전체">전체</option>
