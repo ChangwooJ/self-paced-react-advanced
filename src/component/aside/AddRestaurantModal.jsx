@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Typography } from '../../styles/GlobalStyle';
 import insertImgSrc from '../utils/insertImgSrc';
 import Modal from './Modal';
 import Button from '../Button';
-import { RestaurantContext } from '../../store/RestaurantContext';
+import { useRestaurantContext } from '../../hooks/useRestaurantContext';
 
 const FormItem = styled.div`
   display: flex;
@@ -48,7 +48,7 @@ const initForm = {
 };
 
 const AddRestaurantModal = () => {
-  const { isAddModalOpen, setIsAddModalOpen, addRestaurant } = useContext(RestaurantContext);
+  const { isAddModalOpen, setIsAddModalOpen, addRestaurant } = useRestaurantContext();
   const [form, setForm] = useState(initForm);
   const [loading, setLoading] = useState(false);
 

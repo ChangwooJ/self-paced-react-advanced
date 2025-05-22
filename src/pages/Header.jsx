@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Typography } from '../styles/GlobalStyle';
-import { RestaurantContext } from '../store/RestaurantContext';
+import { useRestaurantContext } from '../hooks/useRestaurantContext';
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -28,7 +28,7 @@ const AddButtonImage = styled.img`
 `;
 
 const Header = () => {
-  const { setIsAddModalOpen } = useContext(RestaurantContext);
+  const { setIsAddModalOpen } = useRestaurantContext();
 
   return (
     <HeaderContainer>

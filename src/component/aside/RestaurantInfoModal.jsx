@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Typography } from '../../styles/GlobalStyle';
 import Modal from './Modal';
 import Button from '../Button';
-import { RestaurantContext } from '../../store/RestaurantContext';
+import { useRestaurantContext } from '../../hooks/useRestaurantContext';
 
 const RestaurantInfo = styled.div`
   margin-bottom: 24px;
@@ -14,7 +14,7 @@ const ButtonContainer = styled.div`
 `;
 
 const RestaurantInfoModal = () => {  
-  const { isModalOpen, setIsModalOpen, selectedRestaurant, restaurants } = useContext(RestaurantContext);
+  const { isModalOpen, setIsModalOpen, selectedRestaurant, restaurants } = useRestaurantContext();
   const restaurant = restaurants.find(restaurant => restaurant.id === selectedRestaurant);
 
   return (

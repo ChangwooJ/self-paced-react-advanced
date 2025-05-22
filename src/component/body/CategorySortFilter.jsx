@@ -1,6 +1,5 @@
-import { useContext } from 'react';
 import styled from 'styled-components';
-import { RestaurantContext } from '../../store/RestaurantContext';
+import { useRestaurantContext } from '../../hooks/useRestaurantContext';
 
 const FilterContainer = styled.section`
   display: flex;
@@ -20,7 +19,7 @@ const CategorySelect = styled.select`
 `;
 
 const CategorySortFilter = () => {
-  const { category, setCategory } = useContext(RestaurantContext);
+  const { category, setCategory } = useRestaurantContext();
 
   const handleChange = (e) => {
     setCategory(e.target.value);

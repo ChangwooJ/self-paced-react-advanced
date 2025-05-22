@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { RestaurantContext } from "./ThemeContext";
+import { useEffect, useState } from "react";
+import { RestaurantContext } from "./RestaurantContext";
 
-function RestaurantProvider({ children }) {
+export const RestaurantProvider = ({ children }) => {
     const [restaurants, setRestaurants] = useState([]);
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -68,6 +68,4 @@ function RestaurantProvider({ children }) {
       {children}
     </RestaurantContext.Provider>
   );
-}
-
-export default RestaurantProvider;
+};
