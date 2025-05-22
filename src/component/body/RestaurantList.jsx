@@ -1,8 +1,7 @@
-import { useContext } from 'react';
 import styled from 'styled-components';
 import { Typography } from '../../styles/GlobalStyle';
 import insertImgSrc from '../utils/insertImgSrc';
-import { RestaurantContext } from '../../store/RestaurantContext';
+import { useRestaurantContext } from '../../hooks/useRestaurantContext';
 
 const RestaurantListContainer = styled.section`
   display: flex;
@@ -67,7 +66,7 @@ const RestaurantListComponent = () => {
     filteredRestaurants, 
     setIsModalOpen, 
     setSelectedRestaurant 
-  } = useContext(RestaurantContext);
+  } = useRestaurantContext();
 
   const handleRestaurantClick = (restaurantId) => {
     setIsModalOpen(true);
