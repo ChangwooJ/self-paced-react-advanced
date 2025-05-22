@@ -1,6 +1,8 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
 import { Typography } from '../../styles/GlobalStyle';
 import insertImgSrc from '../utils/insertImgSrc';
+import { RestaurantContext } from '../../store/RestaurantContext';
 
 const RestaurantListContainer = styled.section`
   display: flex;
@@ -60,16 +62,22 @@ const RestaurantDescription = styled.p`
   -webkit-box-orient: vertical;
 `;
 
-const RestaurantListComponent = ({ restaurants, setIsModalOpen, setSelectedRestaurant }) => {
-  const handleRestaurantClick = (restaurant) => {
+const RestaurantListComponent = () => {
+  const { 
+    filteredRestaurants, 
+    setIsModalOpen, 
+    setSelectedRestaurant 
+  } = useContext(RestaurantContext);
+
+  const handleRestaurantClick = (restaurantId) => {
     setIsModalOpen(true);
-    setSelectedRestaurant(restaurant);
+    setSelectedRestaurant(restaurantId);
   };
 
   return (
     <RestaurantListContainer>
       <RestaurantList>
-        {restaurants.map((restaurant) => (
+        {filteredRestaurants.map((restaurant) => (
           <RestaurantItem 
             key={restaurant.id} 
             onClick={() => handleRestaurantClick(restaurant.id)}
