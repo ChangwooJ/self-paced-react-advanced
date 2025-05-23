@@ -5,6 +5,7 @@ import insertImgSrc from '../utils/insertImgSrc';
 import Modal from './Modal';
 import Button from '../Button';
 import { useRestaurantContext } from '../../hooks/useRestaurantContext';
+import { useModalStateContext } from '../../hooks/useModalStateContext';
 
 const FormItem = styled.div`
   display: flex;
@@ -48,7 +49,8 @@ const initForm = {
 };
 
 const AddRestaurantModal = () => {
-  const { isAddModalOpen, setIsAddModalOpen, addRestaurant } = useRestaurantContext();
+  const { isAddModalOpen, setIsAddModalOpen } = useModalStateContext();
+  const { addRestaurant } = useRestaurantContext();
   const [form, setForm] = useState(initForm);
   const [loading, setLoading] = useState(false);
 

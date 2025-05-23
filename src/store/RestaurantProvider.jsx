@@ -3,9 +3,6 @@ import { RestaurantContext } from "./RestaurantContext";
 
 export const RestaurantProvider = ({ children }) => {
     const [restaurants, setRestaurants] = useState([]);
-    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedRestaurant, setSelectedRestaurant] = useState(null);
     const [category, setCategory] = useState('전체');
 
     useEffect(() => {
@@ -20,7 +17,7 @@ export const RestaurantProvider = ({ children }) => {
         };
     
         fetchRestaurants();
-      }, [isAddModalOpen]);
+      }, []);
     
       const addRestaurant = async (newRestaurant) => {
         try {
@@ -45,19 +42,9 @@ export const RestaurantProvider = ({ children }) => {
         }
       };
     
-      const filteredRestaurants = category === '전체'
-        ? restaurants
-        : restaurants.filter(restaurant => restaurant.category === category);
     
       const value = {
         restaurants,
-        filteredRestaurants,
-        isAddModalOpen,
-        setIsAddModalOpen,
-        isModalOpen,
-        setIsModalOpen,
-        selectedRestaurant,
-        setSelectedRestaurant,
         category,
         setCategory,
         addRestaurant,

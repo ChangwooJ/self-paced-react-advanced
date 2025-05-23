@@ -4,6 +4,8 @@ import { Typography } from '../../styles/GlobalStyle';
 import Modal from './Modal';
 import Button from '../Button';
 import { useRestaurantContext } from '../../hooks/useRestaurantContext';
+import { useSelectedRestaurantContext } from '../../hooks/useSelectedRestaurantContext';
+import { useModalStateContext } from '../../hooks/useModalStateContext';
 
 const RestaurantInfo = styled.div`
   margin-bottom: 24px;
@@ -14,7 +16,9 @@ const ButtonContainer = styled.div`
 `;
 
 const RestaurantInfoModal = () => {  
-  const { isModalOpen, setIsModalOpen, selectedRestaurant, restaurants } = useRestaurantContext();
+  const { isModalOpen, setIsModalOpen } = useModalStateContext();
+  const { restaurants } = useRestaurantContext();
+  const { selectedRestaurant } = useSelectedRestaurantContext();
   const restaurant = restaurants.find(restaurant => restaurant.id === selectedRestaurant);
 
   return (

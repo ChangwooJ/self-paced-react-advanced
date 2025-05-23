@@ -18,9 +18,7 @@ const CategorySelect = styled.select`
   font-size: 16px;
 `;
 
-const CategorySortFilter = () => {
-  const { category, setCategory } = useRestaurantContext();
-
+const CategorySortFilter = ({ category, setCategory }) => {
   const handleChange = (e) => {
     setCategory(e.target.value);
   };
